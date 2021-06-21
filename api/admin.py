@@ -73,6 +73,22 @@ class OrderAdmin(admin.ModelAdmin):
 class OrderDetailAdmin(admin.ModelAdmin):
     list_display = ('id', 'order', 'item', 'quantity', 'order_item_cost', 'order_item_cost_after_discount', 'special_instruction')
 
+#Invoice 
+class InvoiceAdmin(admin.ModelAdmin):
+    list_display = ('invoice_no', 'invoice_date', 'invoice_line_items', 'invoice_amount', 'invoice_amount_after_discount')
+
+#Invoice Line Item
+class InvoiceLineItemAdmin(admin.ModelAdmin):
+    list_display = ('invoice', 'order_detail')
+
+#Payment Method
+class PaymentMethodAdmin(admin.ModelAdmin):
+    list_display = ('id', 'payment_method_name')
+
+#Payment
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'payment_date', 'invoice', 'payment_amount', 'payment_method')
+
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Category, CategoryAdmin)
@@ -84,3 +100,7 @@ admin.site.register(SeatPlan, SeatPlanAdmin)
 admin.site.register(Reservation, ReservationAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderDetail, OrderDetailAdmin)
+admin.site.register(Invoice, InvoiceAdmin)
+admin.site.register(InvoiceLineItem, InvoiceLineItemAdmin)
+admin.site.register(PaymentMethod, PaymentMethodAdmin)
+admin.site.register(Payment, PaymentAdmin)

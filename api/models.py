@@ -157,7 +157,7 @@ class Order(models.Model):
     def order_details(self):
         if self.ordered_items:
             orderdetails = OrderDetail.objects.filter(order=self.id)
-            return ', '.join([str(o.id) for o in orderdetails])
+            return ', '.join([str(o) for o in orderdetails])
 
     @property
     def order_total_cost(self):
@@ -202,4 +202,45 @@ class OrderDetail(models.Model):
     def order_item_cost_after_discount(self):
         return self.quantity * self.item.cost_after_discount
 
-    
+    def __str__(self):
+        return self.item.name
+
+#Invoice model
+class Invoice(models.Model):
+    invoice_no = models.AutoField(primary_key=True,)
+    invoice_date = models.DateTimeField(auto_now_add=True)
+    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
+
+    @property
+    def invoice_amount(self):
+        return self.order.order_total_cost
+
+    @property
+    def invoice_amount_after_discount(self):
+        return self.order.total_cost_after_discount
+
+    @property
+    def invoice_line_items(self):
+        invoice_items = InvoiceLineItem.objects.filter(invoice=self)
+        return ', '.join([str(i.order_detail) for i in invoice_items])
+
+
+class InvoiceLineItem(models.Model):
+    order_detail = models.OneToOneField(OrderDetail, primary_key=True, on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice, on_delete=models.DO_NOTHING)
+
+#Payment model
+class PaymentMethod(models.Model):
+    payment_method_name = models.CharField(max_length=30, blank=True, null=True)
+
+    def __str__(self):
+        return self.payment_method_name
+
+class Payment(models.Model):
+    payment_date = models.DateTimeField(auto_now_add=True)
+    invoice = models.OneToOneField(Invoice, on_delete=models.DO_NOTHING)
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.DO_NOTHING)
+
+    @property
+    def payment_amount(self):
+        return self.invoice.invoice_amount_after_discount
