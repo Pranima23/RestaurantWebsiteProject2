@@ -112,8 +112,8 @@ class IngredientsInItem(models.Model):
     class Meta:
         verbose_name = 'IngredientsInItem'
         
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, blank=True)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, null=True, blank=True)
     quantity_of_ingredient = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
 
 
@@ -141,7 +141,8 @@ class Reservation(models.Model):
     date_reserved = models.DateTimeField(auto_now_add=True)
     check_in_date = models.DateTimeField()
     party_size = models.IntegerField(null=True, blank=True)
-    seat_plan = models.ForeignKey(SeatPlan, on_delete=models.DO_NOTHING)
+    seat_plan = models.ForeignKey(SeatPlan, on_delete=models.DO_NOTHING, null=True, blank=True)
+    customer = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)
@@ -150,7 +151,7 @@ class Reservation(models.Model):
 #Order model
 class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True)
-    reservation_detail = models.ForeignKey(Reservation, on_delete=models.DO_NOTHING)
+    reservation_detail = models.ForeignKey(Reservation, on_delete=models.DO_NOTHING, null=True, blank=True)
     ordered_items = models.ManyToManyField(Item, through='OrderDetail')
     offer = models.ForeignKey(Offer, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -189,8 +190,8 @@ class OrderDetail(models.Model):
     class Meta:
         verbose_name = 'OrderDetail'
 
-    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
-    item = models.ForeignKey(Item, on_delete=models.DO_NOTHING)
+    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING, null=True, blank=True)
+    item = models.ForeignKey(Item, on_delete=models.DO_NOTHING, null=True, blank=True)
     quantity = models.PositiveIntegerField(null=True, blank=True)
     special_instruction = models.TextField(null=True, blank=True)
 
@@ -209,7 +210,7 @@ class OrderDetail(models.Model):
 class Invoice(models.Model):
     invoice_no = models.AutoField(primary_key=True,)
     invoice_date = models.DateTimeField(auto_now_add=True)
-    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
+    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING, blank=True, null=True)
 
     @property
     def invoice_amount(self):
@@ -227,7 +228,7 @@ class Invoice(models.Model):
 
 class InvoiceLineItem(models.Model):
     order_detail = models.OneToOneField(OrderDetail, primary_key=True, on_delete=models.CASCADE)
-    invoice = models.ForeignKey(Invoice, on_delete=models.DO_NOTHING)
+    invoice = models.ForeignKey(Invoice, on_delete=models.DO_NOTHING, null=True, blank=True)
 
 #Payment model
 class PaymentMethod(models.Model):
@@ -238,8 +239,9 @@ class PaymentMethod(models.Model):
 
 class Payment(models.Model):
     payment_date = models.DateTimeField(auto_now_add=True)
-    invoice = models.OneToOneField(Invoice, on_delete=models.DO_NOTHING)
-    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.DO_NOTHING)
+    invoice = models.OneToOneField(Invoice, on_delete=models.DO_NOTHING, null=True, blank=True)
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.DO_NOTHING, null=True, blank=True)
+    customer = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     @property
     def payment_amount(self):

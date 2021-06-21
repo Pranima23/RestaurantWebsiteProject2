@@ -63,7 +63,7 @@ class SeatPlanAdmin(admin.ModelAdmin):
 
 #Reservation
 class ReservationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'date_reserved', 'check_in_date', 'party_size', 'seat_plan')
+    list_display = ('id', 'customer', 'date_reserved', 'check_in_date', 'party_size', 'seat_plan')
 
 #Order
 class OrderAdmin(admin.ModelAdmin):
@@ -87,7 +87,7 @@ class PaymentMethodAdmin(admin.ModelAdmin):
 
 #Payment
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'payment_date', 'invoice', 'payment_amount', 'payment_method')
+    list_display = ('id', 'customer', 'payment_date', 'invoice', 'payment_amount', 'payment_method')
 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Item, ItemAdmin)
