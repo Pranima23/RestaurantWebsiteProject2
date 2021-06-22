@@ -203,10 +203,7 @@ class OrderDetail(models.Model):
     def order_item_cost_after_discount(self):
         return self.quantity * self.item.cost_after_discount
 
-    def __str__(self):
-        return self.item.name
-
-#Invoice model
+#Invoice models
 class Invoice(models.Model):
     invoice_no = models.AutoField(primary_key=True,)
     invoice_date = models.DateTimeField(auto_now_add=True)
@@ -230,7 +227,7 @@ class InvoiceLineItem(models.Model):
     order_detail = models.OneToOneField(OrderDetail, primary_key=True, on_delete=models.CASCADE)
     invoice = models.ForeignKey(Invoice, on_delete=models.DO_NOTHING, null=True, blank=True)
 
-#Payment model
+#Payment models
 class PaymentMethod(models.Model):
     payment_method_name = models.CharField(max_length=30, blank=True, null=True)
 

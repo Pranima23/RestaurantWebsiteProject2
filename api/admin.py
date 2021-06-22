@@ -52,7 +52,7 @@ class IngredientsInItemAdmin(admin.ModelAdmin):
 
 #Offer
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ('name', 'discount_rate')
+    list_display = ('id', 'name', 'discount_rate')
 
 #Table and Seat Plan
 class TableAdmin(admin.ModelAdmin):
