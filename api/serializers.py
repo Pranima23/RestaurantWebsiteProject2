@@ -30,7 +30,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ['id', 'name', 'cost', 'category', 'ingredient', 'description', 'offer', 'discount', 'cost_after_discount']
+        fields = ['id', 'name', 'image', 'cost', 'category', 'ingredient', 'description', 'offer', 'discount', 'cost_after_discount']
 
 #Ingredients in Item Serializer
 class IngredientsInItemSerializer(serializers.ModelSerializer):

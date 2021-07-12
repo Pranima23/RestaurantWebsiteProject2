@@ -80,7 +80,7 @@ class Item(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
     cost = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     category = models.ManyToManyField(Category)
-    # image = models.ImageField(null=True)
+    image = models.ImageField(upload_to="images", null=True)
     description = models.TextField(null=True, blank=True)
     ingredient = models.ManyToManyField(Ingredient, through='IngredientsInItem')
     offer = models.ForeignKey(Offer, on_delete=models.SET_NULL, null=True, blank=True)

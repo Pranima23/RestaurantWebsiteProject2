@@ -15,8 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
+from rest_framework import routers
+from api import views
+
+router = routers.DefaultRouter()
+router.register(r'items', views.ItemView, 'item')
+router.register(r'offers', views.OfferView, 'offer')
+router.register(r'users', views.UserView, 'user')
+router.register(r'categories', views.CategoryView, 'category')
+router.register(r'ingredients', views.IngredientView, 'ingredient')
+router.register(r'itemingredients', views.IngredientsInItemView, 'itemingredient')
+router.register(r'tables', views.TableView, 'table')
+router.register(r'seatplans', views.SeatPlanView, 'seatplan')
+router.register(r'reservations', views.ReservationView, 'reservation')
+router.register(r'orders', views.OrderView, 'order')
+router.register(r'orderdetails', views.OrderDetailView, 'orderdetail')
+router.register(r'invoices', views.InvoiceView, 'invoice')
+router.register(r'invoicelineitems', views.InvoiceLineItemView, 'invoicelineitem')
+router.register(r'paymentmethods', views.PaymentMethodView, 'paymentmethod')
+router.register(r'payments', views.PaymentView, 'payment')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('api.urls'))
-]
+    path('api/', include(router.urls)),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

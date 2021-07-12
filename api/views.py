@@ -1,81 +1,81 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rest_framework import generics 
+from rest_framework import viewsets 
 from .serializers import *
 from .models import *
 
 # Create your views here.
-def api(request):
-    return HttpResponse('API')
+# def api(request):
+#     return HttpResponse('API')
 
 #User view
-class UserView(generics.ListCreateAPIView):
+class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 #Offer view
-class OfferView(generics.ListCreateAPIView):
+class OfferView(viewsets.ModelViewSet):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
 
 #Category view
-class CategoryView(generics.ListCreateAPIView):
+class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 #Ingredient view
-class IngredientView(generics.ListCreateAPIView):
+class IngredientView(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
 #Item view
-class ItemView(generics.ListCreateAPIView):
+class ItemView(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
 #Ingredients in Item view
-class IngredientsInItemView(generics.ListCreateAPIView):
+class IngredientsInItemView(viewsets.ModelViewSet):
     queryset = IngredientsInItem.objects.all()
     serializer_class = IngredientsInItemSerializer
 
 #Table and Seat Plan views
-class TableView(generics.ListCreateAPIView):
+class TableView(viewsets.ModelViewSet):
     queryset = Table.objects.all()
     serializer_class = TableSerializer
 
-class SeatPlanView(generics.ListCreateAPIView):
+class SeatPlanView(viewsets.ModelViewSet):
     queryset = SeatPlan.objects.all()
     serializer_class = SeatPlanSerializer
 
 #Reservation view
-class ReservationView(generics.ListCreateAPIView):
+class ReservationView(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
 
 #Order view
-class OrderView(generics.ListCreateAPIView):
+class OrderView(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 #OrderDetail view
-class OrderDetailView(generics.ListCreateAPIView):
+class OrderDetailView(viewsets.ModelViewSet):
     queryset = OrderDetail.objects.all()
     serializer_class = OrderDetailSerializer
 
 #Invoice view
-class InvoiceView(generics.ListCreateAPIView):
+class InvoiceView(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
     serializer_class = InvoiceSerializer
 
-class InvoiceLineItemView(generics.ListCreateAPIView):
+class InvoiceLineItemView(viewsets.ModelViewSet):
     queryset = InvoiceLineItem.objects.all()
     serializer_class = InvoiceLineItemSerializer
 
 #Payment views
-class PaymentMethodView(generics.ListCreateAPIView):
+class PaymentMethodView(viewsets.ModelViewSet):
     queryset = PaymentMethod.objects.all()
     serializer_class = PaymentMethodSerializer
 
-class PaymentView(generics.ListCreateAPIView):
+class PaymentView(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer

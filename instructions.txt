@@ -1,0 +1,26 @@
+Step 1: Create virtual environment in the root directory of the project.
+    https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
+    Add environment folder to gitignore file
+    Activate the virtual environment
+
+Step 2: Inside virtual environment, in the directory containing requirements.txt i.e. in the root directory, run following command to install all the required dependencies:
+    pip install -r requirements.txt
+
+Step 3: Connect django with MYSQL database.
+    https://medium.com/@omaraamir19966/connect-django-with-mysql-database-f946d0f6f9e3
+
+Step 4: Create superuser in django
+    py manage.py createsuperuser
+
+Step 5: Run the django server in the root directory
+    py manage.py runserver
+
+Step 5: For the frontend, go to the directory containing package.json and run following command:
+    npm install
+
+Step 6: Run the react's development server in the directory frontend/reserve-n-dine:
+    npm start
+
+Step 7: Use your preferred method to fetch API from backend
+    I have used axios using this tutorial. 
+    https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react
