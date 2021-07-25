@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ItemDetail.css";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -7,23 +7,23 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { ItemsContext } from "../../context/ItemsContext";
 import { CartItemsContext } from "../../context/CartItemsContext";
 
-const ItemDetail = () => {
-  //context for items
-  const items = useContext(ItemsContext);
-  const { cartItems, handleAddToCart } = useContext(CartItemsContext);
-  console.log(cartItems);
+const ItemDetail = (props) => {
+  const { items, cartItems, handleAddToCart } = props;
+  console.log(items, cartItems);
 
-  console.log(items);
   const { itemId } = useParams();
   console.log(itemId);
-  const thisItem = items.find((item) => item.item_id === parseInt(itemId));
+  const thisItem = items.find((item) => item.id === parseInt(itemId));
   console.log(thisItem);
 
   var initialQuantity = 0;
-  const thisCartItem = cartItems.find(
-    (cartItem) => cartItem.item_id === thisItem.item_id
-  );
-  console.log(thisCartItem);
+  var thisCartItem;
+  if (thisItem) {
+    thisCartItem = cartItems.find(
+      (cartItem) => cartItem.id === thisItem.id
+    );
+    console.log(thisCartItem);
+  }
   if (thisCartItem) {
     initialQuantity = thisCartItem.quantity;
   }
@@ -39,25 +39,25 @@ const ItemDetail = () => {
       </div>
       <div className="details">
         <div className="details-image">
-          <img src={thisItem.item_img} alt="item"></img>
+          <img src={thisItem && thisItem.image} alt={thisItem && thisItem.name || 'image'}></img>
         </div>
         <div className="details-info">
           <ul>
             <li>
               <div className="item-name">
-                <h1>{thisItem.item_name}</h1>
+                <h1>{thisItem && thisItem.name}</h1>
               </div>
             </li>
             <li>
               <div className="item-description">
                 <h1>Description:</h1>
-                <p>{thisItem.item_description}</p>
+                <p>{thisItem && thisItem.description}</p>
               </div>
             </li>
             <li>
               <div className="ingredients">
                 <h1>Ingredients:</h1>
-                <p>{thisItem.item_ingredients}</p>
+                <p>{thisItem && thisItem.ingredients}</p>
               </div>
             </li>
 
@@ -65,7 +65,7 @@ const ItemDetail = () => {
               <div className="price">
                 <h1>Price:</h1>
                 <p>
-                  <b> Rs {thisItem.item_cost}</b>
+                  <b> Rs {thisItem && thisItem.cost}</b>
                 </p>
               </div>
             </li>
@@ -73,10 +73,12 @@ const ItemDetail = () => {
               <div className="quantity">
                 <div className="qty">
                   <input
+                    required
                     type="number"
                     name="Quantity"
                     placeholder="Quantity"
-                    value={quantity}
+                    min="0"
+                    value={quantity && Math.max(0, quantity)}
                     onChange={(e) => setQuantity(e.target.value)}
                   />
                 </div>

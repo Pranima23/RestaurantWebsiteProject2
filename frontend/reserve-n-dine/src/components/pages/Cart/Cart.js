@@ -15,22 +15,22 @@ import Popup from "../payment/Popup";
 // const initialState = [
 //   {
 //     item: {
-//       item_id: 1,
-//       item_name: "Veg Momo",
-//       item_cost: 100,
-//       item_ingredients: "Flour, Potato, Carrot, Cabbage, Garlic",
-//       item_img: vegmomo,
+//       id: 1,
+//       name: "Veg Momo",
+//       cost: 100,
+//       ingredients: "Flour, Potato, Carrot, Cabbage, Garlic",
+//       img: vegmomo,
 //       category_id: 3,
 //     },
 //     quantity: 2,
 //   },
 //   {
 //     item: {
-//       item_id: 6,
-//       item_name: "Chocolate",
-//       item_cost: 80,
-//       item_ingredients: "Flour, Potato, Carrot, Cabbage, Garlic",
-//       item_img: chocolateicecream,
+//       id: 6,
+//       name: "Chocolate",
+//       cost: 80,
+//       ingredients: "Flour, Potato, Carrot, Cabbage, Garlic",
+//       img: chocolateicecream,
 //       category_id: 7,
 //     },
 //     quantity: 2,
@@ -44,7 +44,7 @@ import Popup from "../payment/Popup";
 //   }
 // }
 
-const Cart = () => {
+const Cart = (props) => {
   const {
     cartItems,
     handleDecrement,
@@ -52,7 +52,7 @@ const Cart = () => {
     handleDelete,
     calculateItemTotal,
     calculateCartTotal,
-  } = useContext(CartItemsContext);
+  } = props;
 
   return (
     <>
@@ -117,14 +117,14 @@ const CartItemsTable = (props) => {
 
 const CartItem = (props) => {
   const { cartItem, onIncrement, onDecrement, onDelete, itemTotal } = props;
-  const { item_name, item_cost, item_id, item_img, quantity } = cartItem;
+  const { name, cost, id, image, quantity } = cartItem;
   return (
     <tr className="div-row">
       <td className="div-col cart-item-img-container">
-        <img className="cart-item-img" src={item_img} alt={item_name} />
+        <img className="cart-item-img" src={image} alt={name} />
       </td>
-      <td className="div-col cart-item-name">{item_name}</td>
-      <td className="div-col cart-item-price">Rs. {item_cost}</td>
+      <td className="div-col cart-item-name">{name}</td>
+      <td className="div-col cart-item-price">Rs. {cost}</td>
       <td className="div-col cart-item-qty">
         <button className="dcr-btn" onClick={() => onDecrement(cartItem)}>
           <GrFormSubtract style={{ fontSize: "0.8em" }} />
