@@ -36,6 +36,7 @@ Global Styles
   max-width: 30rem;
   widows: 100%;
   margin-left: 100px;
+  margin-bottom: 100px;
 }
 
 .details-info {
@@ -180,6 +181,8 @@ li {
   .details-image,
   .details-info {
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .details-image img {
