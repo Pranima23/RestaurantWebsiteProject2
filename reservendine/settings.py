@@ -34,7 +34,6 @@ AUTH_USER_MODEL = 'api.User'
 INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
-    'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
