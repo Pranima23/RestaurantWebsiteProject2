@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "./Menu.css";
 import { Link } from "react-router-dom";
 import { FaSearch, FaAngleUp, FaAngleDown, FaCartPlus } from "react-icons/fa";
@@ -11,8 +11,8 @@ import Pricing from "../../Pricing";
 import { ItemsContext } from "../../context/ItemsContext";
 import { CartItemsContext } from "../../context/CartItemsContext";
 
-
-const Menu = () => {
+const Menu = (props) => {
+  const { items } = props;
   /*===========
   States
   ===========*/
@@ -54,26 +54,21 @@ const Menu = () => {
   //   },
   // ]
 
-  //to be fetched from database
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     axios
       .get("api/categories/")
-        .then((res) => setCategories(res.data))
-          .catch((err) => console.log(err));
-        }, []);
-
-  const items = useContext(ItemsContext);
-  const { cartItems } = useContext(CartItemsContext);
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   //other states
   const [selectedCategory, setSelectedCategory] = useState({});
 
   const [selectedParentCategory, setSelectedParentCategory] = useState({});
 
-  const [selectedItems, setSelectedItems] = useState(items);
-
-
+  const [selectedItems, setSelectedItems] = useState([...items]);
+  console.log(items)
 
   /*===========
   Variables
@@ -93,9 +88,7 @@ const Menu = () => {
     setSelectedCategory(category);
     if (category.parent_category !== null) {
       setSelectedParentCategory(
-        categories.find(
-          (element) => category.parent_category === element.id
-        )
+        categories.find((element) => category.parent_category === element.id)
       );
     } else {
       setSelectedParentCategory({});
@@ -116,17 +109,13 @@ const Menu = () => {
     } else if (Object.keys(selectedParentCategory).length === 0) {
       return (
         <div className="selected-category-container">
-          <div className="selected-category">
-            {selectedCategory.name}
-          </div>
+          <div className="selected-category">{selectedCategory.name}</div>
         </div>
       );
     } else {
       return (
         <div className="selected-category-container">
-          <div className="selected-category">
-            {selectedParentCategory.name}
-          </div>
+          <div className="selected-category">{selectedParentCategory.name}</div>
           <IconContext.Provider
             value={{
               style: { fontSize: "1.6em", margin: "0 12px", fill: "green" },
@@ -135,9 +124,7 @@ const Menu = () => {
             <GrFormNext style={{ fill: "green" }} />
           </IconContext.Provider>
 
-          <div className="selected-subcategory">
-            {selectedCategory.name}
-          </div>
+          <div className="selected-subcategory">{selectedCategory.name}</div>
         </div>
       );
     }
@@ -318,23 +305,22 @@ const Items = (props) => {
 
 const Item = ({ item }) => {
   return (
-    
-      <div className="menu-item-card">
-        
-        <div className="menu-img-container">
-        <Link to={`/menu/items/${item.id}`} style={{ textDecoration: "none", color:"inherit"}}>
+    <div className="menu-item-card">
+      <div className="menu-img-container">
+        <Link
+          to={`/menu/items/${item.id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <img src={item.image} alt={item.name} className="menu-item-img" />
-          </Link>
-        </div>
-        
-        <div className="menu-card-content">
-          <div className="menu-item-name">{item.name}
-          </div>
-          <div className="menu-item-cost">Rs. {item.cost}</div>
-          <button className="menu-add-to-cart-btn">Add to Cart</button>
-        </div>
+        </Link>
       </div>
-    
+
+      <div className="menu-card-content">
+        <div className="menu-item-name">{item.name}</div>
+        <div className="menu-item-cost">Rs. {item.cost}</div>
+        <button className="menu-add-to-cart-btn">Add to Cart</button>
+      </div>
+    </div>
   );
 };
 
