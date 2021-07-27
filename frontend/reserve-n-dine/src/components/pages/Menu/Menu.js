@@ -68,7 +68,7 @@ const Menu = (props) => {
   const [selectedParentCategory, setSelectedParentCategory] = useState({});
 
   const [selectedItems, setSelectedItems] = useState([...items]);
-  console.log(items)
+  console.log(items);
 
   /*===========
   Variables
@@ -304,22 +304,36 @@ const Items = (props) => {
 };
 
 const Item = ({ item }) => {
+  const renderPrice = () => {
+    if (item) {
+      if (item.offer) {
+        return (
+          <>
+            <strike>Rs {item.cost}</strike>
+            <br></br>Rs {item.cost_after_discount}
+          </>
+        );
+      } else {
+        return <>Rs {item.cost}</>;
+      }
+    }
+  };
   return (
     <div className="menu-item-card">
-      <div className="menu-img-container">
-        <Link
-          to={`/menu/items/${item.id}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
+      <Link
+        to={`/menu/items/${item.id}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <div className="menu-img-container">
           <img src={item.image} alt={item.name} className="menu-item-img" />
-        </Link>
-      </div>
+        </div>
 
-      <div className="menu-card-content">
-        <div className="menu-item-name">{item.name}</div>
-        <div className="menu-item-cost">Rs. {item.cost}</div>
-        <button className="menu-add-to-cart-btn">Add to Cart</button>
-      </div>
+        <div className="menu-card-content">
+          <div className="menu-item-name">{item.name}</div>
+          <div className="menu-item-cost">{renderPrice()}</div>
+          <button className="menu-add-to-cart-btn">Add to Cart</button>
+        </div>
+      </Link>
     </div>
   );
 };

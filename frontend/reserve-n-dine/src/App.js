@@ -33,6 +33,7 @@ function App() {
 
   useEffect(() =>{
     localStorage.setItem("cartItems", JSON.stringify(cartItems))
+
   }, [cartItems]);
 
   //event handlers
@@ -54,6 +55,8 @@ function App() {
     }
 
     setCartItems(updatedCart);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+
     window.alert("Item added to Cart.")
   } else window.alert("Invalid.")
   };
@@ -89,7 +92,7 @@ function App() {
   const calculateItemTotal = (cartItem) => {
     console.log(cartItem);
     const quantity = cartItem.quantity;
-    const rate = parseFloat(cartItem.cost);
+    const rate = parseFloat(cartItem.cost_after_discount);
     return quantity * rate;
   };
 

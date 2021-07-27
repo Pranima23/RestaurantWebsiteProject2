@@ -19,9 +19,7 @@ const ItemDetail = (props) => {
   var initialQuantity = 0;
   var thisCartItem;
   if (thisItem) {
-    thisCartItem = cartItems.find(
-      (cartItem) => cartItem.id === thisItem.id
-    );
+    thisCartItem = cartItems.find((cartItem) => cartItem.id === thisItem.id);
     console.log(thisCartItem);
   }
   if (thisCartItem) {
@@ -30,6 +28,20 @@ const ItemDetail = (props) => {
 
   const [quantity, setQuantity] = useState(initialQuantity);
   console.log(quantity);
+
+  const renderPrice = () => {
+    if (thisItem) {
+      if (thisItem.offer) {
+        return (
+          <>
+            <strike>Rs {thisItem.cost}</strike> Rs {thisItem.cost_after_discount}
+          </>
+        );
+      } else {
+        return <>Rs {thisItem.cost}</>;
+      }
+    }
+  };
   return (
     <div>
       <div className="back-to-result">
@@ -39,7 +51,10 @@ const ItemDetail = (props) => {
       </div>
       <div className="details">
         <div className="details-image">
-          <img src={thisItem && thisItem.image} alt={thisItem && thisItem.name || 'image'}></img>
+          <img
+            src={thisItem && thisItem.image}
+            alt={(thisItem && thisItem.name) || "image"}
+          ></img>
         </div>
         <div className="details-info">
           <ul>
@@ -65,7 +80,7 @@ const ItemDetail = (props) => {
               <div className="price">
                 <h1>Price:</h1>
                 <p>
-                  <b> Rs {thisItem && thisItem.cost}</b>
+                  <b>{renderPrice()}</b>
                 </p>
               </div>
             </li>
