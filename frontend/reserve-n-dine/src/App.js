@@ -21,6 +21,7 @@ const cartFromLocalStorage = JSON.parse(localStorage.getItem("cartItems") || "[]
 function App() {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState(cartFromLocalStorage);
+  const [cartCount, setCartCount] = useState();
 
   useEffect(() => {
     axios
@@ -33,8 +34,17 @@ function App() {
 
   useEffect(() =>{
     localStorage.setItem("cartItems", JSON.stringify(cartItems))
-
+    updateCartCount();
   }, [cartItems]);
+
+  const updateCartCount = () => {
+    let count = 0;
+    cartItems.forEach(cartItem => {
+      count += cartItem.quantity
+    });
+    console.log(count)
+    setCartCount(count);
+  }
 
   //event handlers
   const handleAddToCart = (item, quantity) => {
@@ -55,6 +65,7 @@ function App() {
     }
 
     setCartItems(updatedCart);
+    updateCartCount();
     localStorage.setItem("cartItems", JSON.stringify(cartItems))
 
     window.alert("Item added to Cart.")
@@ -106,7 +117,7 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
+      <Navbar cartCount={cartCount}/>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/services" component={Services} />
@@ -114,12 +125,13 @@ function App() {
         <Route
           path="/menu"
           exact
-          render={(props) => <Menu {...props} items={items} />}
+          render={(props) => <Menu {...props} items={items} cartCount={cartCount} />}
         />
         <Route path="/menu/items/:itemId" exact>
           <ItemDetail
             items={items}
             cartItems={cartItems}
+            cartCount={cartCount}
             handleAddToCart={handleAddToCart}
           />
         </Route>

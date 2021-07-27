@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ItemDetail.css";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { CartIcon } from "./Menu";
 
 //context for items
 import { ItemsContext } from "../../context/ItemsContext";
 import { CartItemsContext } from "../../context/CartItemsContext";
 
 const ItemDetail = (props) => {
-  const { items, cartItems, handleAddToCart } = props;
+  const { items, cartItems, cartCount, handleAddToCart } = props;
   console.log(items, cartItems);
 
   const { itemId } = useParams();
@@ -34,7 +35,8 @@ const ItemDetail = (props) => {
       if (thisItem.offer) {
         return (
           <>
-            <strike>Rs {thisItem.cost}</strike> Rs {thisItem.cost_after_discount}
+            <strike>Rs {thisItem.cost}</strike> Rs{" "}
+            {thisItem.cost_after_discount}
           </>
         );
       } else {
@@ -108,6 +110,7 @@ const ItemDetail = (props) => {
           </ul>
         </div>
       </div>
+      <CartIcon cartCount={cartCount} />
     </div>
   );
 };

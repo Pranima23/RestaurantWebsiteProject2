@@ -54,6 +54,8 @@ const Cart = (props) => {
     calculateCartTotal,
   } = props;
 
+  
+
   return (
     <>
       <CartContent>

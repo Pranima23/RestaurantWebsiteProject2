@@ -6,7 +6,7 @@ import {FaBars, FaTimes, FaKeybase , FaCartPlus, FaRobot} from 'react-icons/fa';
 import {IconContext} from 'react-icons/lib';
 // import Chatbot from './Chatbot';
 
-function Navbar() {
+function Navbar({cartCount}) {
     const [click, setClick] = useState(false)
     const [button, setButton] =useState(true)
     const handleClick = () =>{
@@ -75,6 +75,7 @@ function Navbar() {
                               aria-label='Cart'
                             >
                         <FaCartPlus/>
+                        <span className="nav-cart-items-no">{cartCount}</span>
                         </Link>
                         
                         <li className="nav-btn">

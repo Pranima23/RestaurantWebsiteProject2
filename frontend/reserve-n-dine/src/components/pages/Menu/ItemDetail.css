@@ -161,7 +161,7 @@ li {
 }
 
 .add-to-cart-btn:hover::before {
-  transform: scaleX(55);
+  transform: scaleX(30);
 }
 
 .add-to-cart-btn:hover {

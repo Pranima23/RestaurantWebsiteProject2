@@ -12,7 +12,7 @@ import { ItemsContext } from "../../context/ItemsContext";
 import { CartItemsContext } from "../../context/CartItemsContext";
 
 const Menu = (props) => {
-  const { items } = props;
+  const { items, cartCount } = props;
   /*===========
   States
   ===========*/
@@ -147,7 +147,7 @@ const Menu = (props) => {
   return (
     <>
       <MenuContent>
-        <CartIcon />
+        <CartIcon cartCount={cartCount}/>
 
         <SearchBar />
 
@@ -338,13 +338,13 @@ const Item = ({ item }) => {
   );
 };
 
-const CartIcon = () => {
+export const CartIcon = ({cartCount}) => {
   return (
     <>
       <Link to="/cart">
         <button className="cart-icon-link">
           <FaCartPlus style={{ fontSize: "1.4rem" }} />
-          <span className="cart-items-no">5</span>
+          <span className="cart-items-no">{cartCount}</span>
         </button>
       </Link>
     </>

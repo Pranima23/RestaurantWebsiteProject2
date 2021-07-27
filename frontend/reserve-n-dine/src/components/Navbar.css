@@ -75,6 +75,24 @@
   .menu-icon {
     display: none;
   }
+
+  .social-icon-link {
+    position: relative;
+  }
+  .nav-cart-items-no {
+    position: absolute;
+    top: -6px;
+    left: 8px;
+    background-color: var(--pink);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    padding: 0.25em;
+    box-shadow: 0 5px 15px -2px rgba(0, 0, 0, 0.5);
+  }
   
   @media screen and (max-width: 960px) {
     .NavbarItems {
@@ -152,3 +170,4 @@
       height: 120px;
     }
   }
+
