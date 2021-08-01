@@ -33,6 +33,7 @@ function Register() {
       <p className='footer-subscription-heading'>
         Register to our site to get the exclusive membership and recieve many offers and discount
       </p>
+      <br/>
       <p className='footer-subscription-text'>
         You can Logout at any time.
       </p>
@@ -42,7 +43,7 @@ function Register() {
             className='footer-input'
             name='name'
             value ={name}
-            onchange={(e)=>setName(e.target.value)}
+            onChange={(e)=>setName(e.target.value)}
             type='text'
             placeholder='Your Name'
           />
@@ -50,7 +51,7 @@ function Register() {
             className='footer-input'
             name='email'
             value ={email}
-            onchange={(e)=>setEmail(e.target.value)}
+            onChange={(e)=>setEmail(e.target.value)}
             type='email'
             placeholder='Your Email'
           />
@@ -58,7 +59,7 @@ function Register() {
             className='footer-input'
             name='password'
             value ={password}
-            onchange={(e)=>setPassword(e.target.value)}
+            onChange={(e)=>setPassword(e.target.value)}
             type='password'
             placeholder='Your password'
           />
@@ -66,12 +67,17 @@ function Register() {
             className='footer-input'
             name='Confirm Password'
             value ={repassword}
-            onchange={(e)=>setRepassword(e.target.value)}
+            onChange={(e)=>setRepassword(e.target.value)}
             type='password'
             placeholder='Confirm Password'
           />
           <Button onclick={SignUp} buttonStyle='btn--outline'>SignUp</Button>
+          <br/>
         </form>
+        <br/>
+        <p className='footer-subscription-text'>
+            Thank you for Signing Up.
+        </p>
       </div>
     </section>
        <br>
