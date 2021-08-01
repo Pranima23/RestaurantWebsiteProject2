@@ -14,6 +14,7 @@ import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
 import payment from "./components/pages/payment/payment";
+import Reservation from "./components/pages/Reservation/Reservation";
 // import Chatbot from "./components/Chatbot";
 
 const cartFromLocalStorage = JSON.parse(localStorage.getItem("cartItems") || "[]")
@@ -155,6 +156,11 @@ function App() {
         <Route path="/log-in" component={Login} />
         <Route path="/payment" component={payment} />
         <Route path="/register" component={Register} />
+        <Route
+          path="/reservation"
+          exact
+          render={(props) => <Reservation {...props} />}
+        />
         {/* <Route path='/Chatbot' component={Chatbot} /> */}
       </Switch>
       <Footer />
