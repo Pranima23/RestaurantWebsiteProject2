@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 
 import Table from "./table";
-import './reservation.css';
+import './table.css';
 
 
 export default props => {
