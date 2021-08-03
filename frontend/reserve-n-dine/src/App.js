@@ -4,6 +4,7 @@ import "./App.css";
 import Home from "./components/pages/HomePage/Home";
 import Services from "./components/pages/Services/Services";
 import Products from "./components/pages/Products/Products";
+import book from "./components/pages/Reservations/book";
 import Menu from "./components/pages/Menu/Menu";
 import SignUp from "./components/pages/SignUp/SignUp";
 import Register from "./components/pages/SignUp/SignUp";
@@ -13,6 +14,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import payment from "./components/pages/payment/payment";
 // import Chatbot from "./components/Chatbot";
 
@@ -155,6 +157,7 @@ function App() {
         <Route path="/log-in" component={Login} />
         <Route path="/payment" component={payment} />
         <Route path="/register" component={Register} />
+        <Route path="/reservations" component={book} />
         {/* <Route path='/Chatbot' component={Chatbot} /> */}
       </Switch>
       <Footer />

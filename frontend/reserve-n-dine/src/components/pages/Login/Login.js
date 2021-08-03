@@ -32,6 +32,7 @@ function Login(){
         <p className='footer-subscription-heading'>
           Visit our site to get the exclusive membership and recieve many offers and discount
         </p>
+        <br/>
         <p className='footer-subscription-text'>
           You can Logout at any time.
         </p>
@@ -41,7 +42,7 @@ function Login(){
               className='footer-input'
               name='email'
               value ={email}
-              onchange={(e)=>setEmail(e.target.value)}
+              onChange={(e)=>setEmail(e.target.value)}
               type='email'
               placeholder='Your Email'
             />
@@ -49,7 +50,7 @@ function Login(){
               className='footer-input'
               name='password'
               value ={password}
-              onchange={(e)=>setPassword(e.target.value)}
+              onChange={(e)=>setPassword(e.target.value)}
               type='password'
               placeholder='Your password'
             />

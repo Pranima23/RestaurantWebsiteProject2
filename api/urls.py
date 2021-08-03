@@ -1,7 +1,7 @@
-# from django.urls import path
-# from .views import *
+#from django.urls import path
+#from .views import *
 
-# urlpatterns = [
+#urlpatterns = [
 #     path('', api, name='api'),
 #     path('user/', UserView.as_view()),
 #     path('offer/', OfferView.as_view()),
@@ -18,4 +18,4 @@
 #     path('invoicelineitem/', InvoiceLineItemView.as_view()),
 #     path('paymentmethod/', PaymentMethodView.as_view()),
 #     path('payment/', PaymentView.as_view()),
-# ]
+#]

@@ -77,7 +77,11 @@ function Navbar({cartCount}) {
                         <FaCartPlus/>
                         <span className="nav-cart-items-no">{cartCount}</span>
                         </Link>
-                        
+                        <li className="nav-item">
+                            <Link to='/reservations' className='nav-links'>
+                                Reservation
+                            </Link>
+                        </li>
                         <li className="nav-btn">
                             { button ?(
                                 <Link to='/register' className="btn-link">
