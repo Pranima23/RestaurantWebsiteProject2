@@ -2,10 +2,12 @@ import React , { Component, useState }from 'react';
 import Cart from "../Cart/Cart";
 import Popup from "./Popup";
 import { Link } from "react-router-dom";
+import { Button } from '../../Button';
 import "./OrderSummary.css";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { GrFormAdd, GrFormSubtract, GrPrevious, GrNext } from "react-icons/gr";
+import Esewa from './Esewa';
 
 const OrderSummary = (props) => {
 const {handleproceed, orderItems ,calculateorderItemTotal,calculateOrderTotal }= props;
@@ -44,7 +46,10 @@ const OrderHeader = () => {
 };
 
 const Update = () => {
-  return <Link to ="/cart"><div className="update">Update your cart</div></Link>
+  return <Link to ="/cart" className="btn-link1">  
+  <Button onclick={Cart} buttonStyle='btn--outline1' buttonSize='btn--mobile1'>
+  Update your Cart
+  </Button></Link>
 };
   
 const OrderTable = (props) => {
@@ -100,17 +105,56 @@ const OrderTotal = ({orderTotal}) =>{
 
 const Checkout =() =>{
   return(
-     <div class="checkout">
-     <h3>Checkout Form</h3>
-     <form action="" method="POST">
-       Ordered by:
-       <input type="text"></input>
-       <p>Address<input type="text"></input></p>
-       <p>Mobile No.<input type="text"/></p>
-       <p>Email<input type="text"/></p>
-       <Link to = "/esewa"><p><button class="btn-info">Place order</button></p></Link>
+    <div className='checkout-container1'>
+    <section className='checkout-subscription'>
+    <p className='checkout-subscription-heading'>
+    Are you sure of your items in the checklist? 
+
+    Do you want to Checkout?
+    </p>
+    <br/>
+    <div className='input-areas'>
+          <form action="" method="POST">
+          <input
+              className='footer-input'
+              name='Ordered By'
+              type='name'
+              placeholder='Your Name'
+            />
+            <input
+              className='footer-input'
+              name='email'
+              type='email'
+              placeholder='Your Email'
+            />
+             <input
+              className='footer-input'
+              name='Mobile number'
+              type='password'
+              placeholder='Your number'
+            />
+             <input
+              className='footer-input'
+              name='adresss'
+              type='text'
+              placeholder='Your address'
+            />
+
+      <Link to = "/esewa"  className="btn-link1">
+        <Button onclick={Esewa} buttonStyle='btn--outline1' buttonSize='btn--mobile1'>
+          Place order
+        </Button>
+        {/* <li>
+          Cash On delivery 
+        </li>
+        <li>
+          Esewa
+        </li> */}
+      </Link>
      </form>
-     </div>
+    </div>
+    </section>
+    </div>  
   )
 };
 
