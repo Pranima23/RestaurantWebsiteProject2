@@ -11,6 +11,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { GrFormAdd, GrFormSubtract, GrPrevious, GrNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import Popup from "../payment/Popup";
+import OrderSummary from "../payment/OrderSummary";
 
 // const initialState = [
 //   {
@@ -187,19 +188,21 @@ const CartButtons = () => {
           Add more items
         </button>
       </Link>
+
       <div>
-        <button className="proceed-btn" onClick={togglePopup}>
-          Proceed
-          <FaChevronRight style={{ marginLeft: "1em", fontSize: "0.8em" }} />
+      <Link to="/OrderSummary">
+        <button className="proceed-btn"  >
+         <FaChevronRight style={{ marginLeft: "1em", fontSize: "0.8em" }} />Proceed
         </button>
-        {isOpen && (
+      </Link>
+       {/*} {isOpen && (
           <Popup
             content={
               <>
                 <b>Payment Options</b>
                 <div className="payment-option">
-                  <Link to="/payment">
-                    <button className="pay-with-esewa">eSewa</button>
+                  <Link to="/checkout ">
+                   <button className="pay-with-esewa">eSewa</button>
                   </Link>
                   <button className="pay-with-cash">Cash</button>
                 </div>
@@ -207,8 +210,10 @@ const CartButtons = () => {
             }
             handleClose={togglePopup}
           />
-        )}
+          )}*/}
       </div>
     </div>
+
   );
 };
+
