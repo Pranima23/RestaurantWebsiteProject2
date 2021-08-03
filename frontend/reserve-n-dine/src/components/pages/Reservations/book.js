@@ -37,7 +37,7 @@ export default props => {
   });
 
   // List of potential locations
-  const [locations] = useState(["Any Location", "Patio", "Inside", "Bar"]);
+  const [locations] = useState(["Any Location", "Inside"]);
   const [times] = useState([
     "9AM",
     "10AM",
