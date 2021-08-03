@@ -94,7 +94,7 @@ class Item(models.Model):
 
     @property
     def cost_after_discount(self):
-        return self.cost - self.discount
+       return self.cost - self.discount
 
     def __str__(self):
         return self.name

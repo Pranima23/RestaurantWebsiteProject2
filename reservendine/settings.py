@@ -82,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'reservendinedb',
-        'USER': 'pranima23',
-        'PASSWORD': 'reservendine2dbpw',
+        'USER': 'root',
+        'PASSWORD': 'reserve',
         'HOST': 'localhost',
         'PORT': '3306',
     }
