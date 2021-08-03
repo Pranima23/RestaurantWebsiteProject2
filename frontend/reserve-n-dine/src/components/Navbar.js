@@ -76,7 +76,11 @@ function Navbar() {
                             >
                         <FaCartPlus/>
                         </Link>
-                        
+                        <li className="nav-item">
+                            <Link to='/reservations' className='nav-links'>
+                                Reservation
+                            </Link>
+                        </li>
                         <li className="nav-btn">
                             { button ?(
                                 <Link to='/register' className="btn-link">
