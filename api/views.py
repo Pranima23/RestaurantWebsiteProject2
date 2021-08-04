@@ -79,3 +79,7 @@ class PaymentMethodView(viewsets.ModelViewSet):
 class PaymentView(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
+
+
+
+

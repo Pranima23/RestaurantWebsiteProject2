@@ -8,7 +8,7 @@ export const homeObjOne = {
       'Get access to our exclusive features that allows you to reserve as well as surf through our menu items',
     buttonLabel: 'Get Started',
     imgStart: '',
-    img: 'images/Ellipse 1.svg',
+    img: 'images/reserve.svg',
     alt: 'Reserve N Dine'
   };
   
