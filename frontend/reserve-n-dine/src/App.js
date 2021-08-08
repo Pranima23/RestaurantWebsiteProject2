@@ -202,7 +202,7 @@ function App() {
           exact
           render={(props) => <ReservationForm {...props} />}
         />
-        <Route path="/reservations" component={book} />
+        <Route path="/reservation" component={book} />
         {/* <Route path='/Chatbot' component={Chatbot} /> */}
       </Switch>
       <Footer />
