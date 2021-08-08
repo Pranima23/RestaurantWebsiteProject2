@@ -54,6 +54,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# REST_FRAMEWORK = {
+#     # 'DEFAULT_PERMISSION_CLASSES': (
+#     #     'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+#         # 'rest_framework.authentication.SessionAuthentication',
+#         # 'rest_framework.authentication.BasicAuthentication',
+#     ),
+# }
+
 ROOT_URLCONF = 'reservendine.urls'
 
 TEMPLATES = [
@@ -81,9 +92,9 @@ WSGI_APPLICATION = 'reservendine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reservendinedb',
-        'USER': 'pranima23',
-        'PASSWORD': 'reservendine2dbpw',
+        'NAME': 'trial',
+        'USER': 'root',
+        'PASSWORD':'12345',
         'HOST': 'localhost',
         'PORT': '3306',
         

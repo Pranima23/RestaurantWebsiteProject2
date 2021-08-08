@@ -1,10 +1,10 @@
-import React, { Component, useState } from 'react';
-import Cart from '../Cart/Cart';
-import Popup from './Popup';
-import { Link } from 'react-router-dom';
-import { Button } from '../../Button';
-import './OrderSummary.css';
-import axios from 'axios';
+import React, { Component, useState } from "react";
+import Cart from "../Cart/Cart";
+import Popup from "./Popup";
+import { Link } from "react-router-dom";
+import { Button } from "../../Button";
+import "./OrderSummary.css";
+import axios from "axios";
 
 const OrderSummary = (props) => {
   const {
@@ -128,11 +128,9 @@ const Checkout = (props) => {
   const togglePopup = () => {
     setisOpen(!isOpen);
   };
-   
- const [responseData, setresponseData] = useState ()
 
+  const [responseData, setresponseData] = useState();
 
- 
   const { orderItems } = props;
 
   const handlePlaceOrder = () => {
@@ -140,33 +138,31 @@ const Checkout = (props) => {
     const order = {
       reservation_detail: 1,
     };
-    console.log('handling post');
+    console.log("handling post");
     //let orderid
     axios
-      .post('api/orders/', order)
-      .then((res) => {
-        console.log(res.data.id);
-
-        setresponseData(res.data)
-       // const orderid = res.data.id;
-      })
-      .catch((err) => console.log(err));
-
-    orderItems.forEach((item) => {
-      console.log(responseData)
-       const orderdetails = {
-        order:responseData,
-        item: item.id,
-        quantity: item.quantity,
-      };
-      axios
-      .post('api/orderdetails/', orderdetails)
+      .post("api/orders/", order)
       .then((res) => {
         console.log(res.data);
-       // const orderid = res.data.id;
+        orderItems.forEach((item) => {
+          console.log(res.data.id);
+          const orderdetails = {
+            order: res.data.id,
+            item: item.id,
+            quantity: item.quantity,
+          };
+          axios
+            .post("api/orderdetails/", orderdetails)
+            .then((res) => {
+              console.log(res.data);
+              // const orderid = res.data.id;
+            })
+            .catch((err) => console.log(err));
+        });
+        //setresponseData(res.data)
+        // const orderid = res.data.id;
       })
       .catch((err) => console.log(err));
-    });
   };
   return (
     <div className="checkout-container1">

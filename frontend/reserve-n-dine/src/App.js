@@ -5,6 +5,7 @@ import Home from "./components/pages/HomePage/Home";
 import Services from "./components/pages/Services/Services";
 import Products from "./components/pages/Products/Products";
 import book from "./components/pages/Reservations/book";
+import ReservationForm from "./components/pages/Reservation/Booking";
 import Menu from "./components/pages/Menu/Menu";
 import SignUp from "./components/pages/SignUp/SignUp";
 import Register from "./components/pages/SignUp/SignUp";
@@ -14,15 +15,9 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
-<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Payment from "./components/pages/payment/Payment";
-import Popup from "./components/pages/payment/Popup"
-=======
-import "bootstrap/dist/css/bootstrap.min.css";
-import payment from "./components/pages/payment/payment";
-import ReservationForm from "./components/pages/Reservation/Booking";
->>>>>>> origin/pranima
+import Popup from "./components/pages/payment/Popup";
 import Esewa from "./components/pages/payment/Esewa";
 import esewaverify from "./components/pages/payment/esewaverify";
 import OrderSummary from "./components/pages/payment/OrderSummary";
@@ -118,8 +113,6 @@ function App() {
     });
     return priceTotal;
   };
-
-<<<<<<< HEAD
   //const LocalStoragetoOrder = JSON.parse(localStorage.getItem("cartItems") || "{");
 
   //const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
@@ -146,46 +139,33 @@ function App() {
  
  {/*function proceed (){
 =======
-  const LocalStoragetoOrder = JSON.parse(
-    localStorage.getItem("cartItems") || "[]"
-  );
-
-  const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
-
-  useEffect(() => {
-    localStorage.getItem("cartItems", JSON.stringify(orderItems));
-  }, [orderItems]);
-  console.log(orderItems);
-
-  {
-    /*function proceed (){
 >>>>>>> origin/pranima
     console.log("proceeding to next page");
     const orderItems = localStorage.getItem("cartItems");
     console.log(orderItems)
     return orderItems;
-<<<<<<< HEAD
+
+
   }*/}
 
 
-=======
-  }*/
-  }
-  const calculateorderItemTotal = (orderItem) => {
-    console.log(orderItem);
-    const quantity = orderItem.quantity;
-    const rate = parseFloat(orderItem.cost);
-    return quantity * rate;
-  };
+ 
+  // const calculateorderItemTotal = (orderItem) => {
+  //   console.log(orderItem);
+  //   const quantity = orderItem.quantity;
+  //   const rate = parseFloat(orderItem.cost);
+  //   return quantity * rate;
+  // };
 
-  const calculateOrderTotal = () => {
-    let priceTotal = 0;
-    orderItems.forEach((orderItem) => {
-      priceTotal += calculateorderItemTotal(orderItem);
-    });
-    return priceTotal;
-  };
->>>>>>> origin/pranima
+  // const calculateOrderTotal = () => {
+  //   let priceTotal = 0;
+  //   orderItems.forEach((orderItem) => {
+  //     priceTotal += calculateorderItemTotal(orderItem);
+  //   });
+  //   return priceTotal;
+  // };
+
+
 
   return (
     <Router>
@@ -226,18 +206,13 @@ function App() {
           render={(props) => (
             <OrderSummary
               {...props}
-<<<<<<< HEAD
+
              
               orderItems={cartItems}
               calculateorderItemTotal={calculateItemTotal}
               calculateOrderTotal={calculateCartTotal}
              // handleproceed={proceed}
-=======
-              orderItems={orderItems}
-              calculateorderItemTotal={calculateorderItemTotal}
-              calculateOrderTotal={calculateOrderTotal}
-              // handleproceed={proceed}
->>>>>>> origin/pranima
+
             />
           )}
         />

@@ -19,7 +19,7 @@ function Login() {
     console.log("Trying to log in...");
     console.log(userInfo);
     axios
-      .post("api-auth/login", userInfo)
+      .put("api-auth/login", userInfo)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   }
