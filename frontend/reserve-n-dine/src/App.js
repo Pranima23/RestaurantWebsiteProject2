@@ -14,68 +14,66 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
+<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Payment from "./components/pages/payment/Payment";
 import Popup from "./components/pages/payment/Popup"
+=======
+import "bootstrap/dist/css/bootstrap.min.css";
+import payment from "./components/pages/payment/payment";
+import ReservationForm from "./components/pages/Reservation/Booking";
+>>>>>>> origin/pranima
 import Esewa from "./components/pages/payment/Esewa";
 import esewaverify from "./components/pages/payment/esewaverify";
 import OrderSummary from "./components/pages/payment/OrderSummary";
 // import Chatbot from "./components/Chatbot";
 
-const cartFromLocalStorage = JSON.parse(localStorage.getItem("cartItems") || "[]")
+const cartFromLocalStorage = JSON.parse(
+  localStorage.getItem("cartItems") || "[]"
+);
 
 function App() {
-  const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState(cartFromLocalStorage);
   const [cartCount, setCartCount] = useState();
 
   useEffect(() => {
-    axios
-      .get("api/items/")
-      .then((res) => setItems(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-  console.log("fetching...");
-  console.log(items);
-
-  useEffect(() =>{
-    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
     updateCartCount();
   }, [cartItems]);
 
   const updateCartCount = () => {
     let count = 0;
-    cartItems.forEach(cartItem => {
-      count += cartItem.quantity
+    cartItems.forEach((cartItem) => {
+      count += cartItem.quantity;
     });
-    console.log(count)
+    console.log(count);
     setCartCount(count);
-  }
+  };
 
   //event handlers
   const handleAddToCart = (item, quantity) => {
-    if (item && quantity>0){
-    const updatedCart = cartItems;
-    const updatedItemIndex = updatedCart.findIndex(
-      (cartItem) => item.id === cartItem.id
-    );
+    if (item && quantity > 0) {
+      const updatedCart = cartItems;
+      const updatedItemIndex = updatedCart.findIndex(
+        (cartItem) => item.id === cartItem.id
+      );
 
-    if (updatedItemIndex < 0) {
-      updatedCart.push({ ...item, quantity: quantity });
-    } else {
-      const updatedItem = {
-        ...updatedCart[updatedItemIndex],
-      };
-      updatedItem.quantity = quantity;
-      updatedCart[updatedItemIndex] = updatedItem;
-    }
+      if (updatedItemIndex < 0) {
+        updatedCart.push({ ...item, quantity: quantity });
+      } else {
+        const updatedItem = {
+          ...updatedCart[updatedItemIndex],
+        };
+        updatedItem.quantity = quantity;
+        updatedCart[updatedItemIndex] = updatedItem;
+      }
 
-    setCartItems(updatedCart);
-    updateCartCount();
-    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+      setCartItems(updatedCart);
+      updateCartCount();
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
-    window.alert("Item added to Cart.")
-  } else window.alert("Invalid.")
+      window.alert("Item added to Cart.");
+    } else window.alert("Invalid.");
   };
 
   const handleDecrement = (cartItem) => {
@@ -121,6 +119,7 @@ function App() {
     return priceTotal;
   };
 
+<<<<<<< HEAD
   //const LocalStoragetoOrder = JSON.parse(localStorage.getItem("cartItems") || "{");
 
   //const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
@@ -146,17 +145,51 @@ function App() {
 */}
  
  {/*function proceed (){
+=======
+  const LocalStoragetoOrder = JSON.parse(
+    localStorage.getItem("cartItems") || "[]"
+  );
+
+  const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
+
+  useEffect(() => {
+    localStorage.getItem("cartItems", JSON.stringify(orderItems));
+  }, [orderItems]);
+  console.log(orderItems);
+
+  {
+    /*function proceed (){
+>>>>>>> origin/pranima
     console.log("proceeding to next page");
     const orderItems = localStorage.getItem("cartItems");
     console.log(orderItems)
     return orderItems;
+<<<<<<< HEAD
   }*/}
 
 
+=======
+  }*/
+  }
+  const calculateorderItemTotal = (orderItem) => {
+    console.log(orderItem);
+    const quantity = orderItem.quantity;
+    const rate = parseFloat(orderItem.cost);
+    return quantity * rate;
+  };
+
+  const calculateOrderTotal = () => {
+    let priceTotal = 0;
+    orderItems.forEach((orderItem) => {
+      priceTotal += calculateorderItemTotal(orderItem);
+    });
+    return priceTotal;
+  };
+>>>>>>> origin/pranima
 
   return (
     <Router>
-      <Navbar cartCount={cartCount}/>
+      <Navbar cartCount={cartCount} />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/services" component={Services} />
@@ -164,11 +197,10 @@ function App() {
         <Route
           path="/menu"
           exact
-          render={(props) => <Menu {...props} items={items} cartCount={cartCount} />}
+          render={(props) => <Menu {...props} cartCount={cartCount} />}
         />
         <Route path="/menu/items/:itemId" exact>
           <ItemDetail
-            items={items}
             cartItems={cartItems}
             cartCount={cartCount}
             handleAddToCart={handleAddToCart}
@@ -179,7 +211,6 @@ function App() {
           render={(props) => (
             <Cart
               {...props}
-              items={items}
               cartItems={cartItems}
               handleAddToCart={handleAddToCart}
               handleDecrement={handleDecrement}
@@ -195,11 +226,18 @@ function App() {
           render={(props) => (
             <OrderSummary
               {...props}
+<<<<<<< HEAD
              
               orderItems={cartItems}
               calculateorderItemTotal={calculateItemTotal}
               calculateOrderTotal={calculateCartTotal}
              // handleproceed={proceed}
+=======
+              orderItems={orderItems}
+              calculateorderItemTotal={calculateorderItemTotal}
+              calculateOrderTotal={calculateOrderTotal}
+              // handleproceed={proceed}
+>>>>>>> origin/pranima
             />
           )}
         />
@@ -218,6 +256,11 @@ function App() {
         <Route path="/log-in" component={Login} />
         <Route path="/payment" component={Payment} />
         <Route path="/register" component={Register} />
+        <Route
+          path="/reservation"
+          exact
+          render={(props) => <ReservationForm {...props} />}
+        />
         <Route path="/reservations" component={book} />
         {/* <Route path='/Chatbot' component={Chatbot} /> */}
       </Switch>

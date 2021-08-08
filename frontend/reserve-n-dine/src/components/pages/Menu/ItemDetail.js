@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ItemDetail.css";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -7,40 +7,57 @@ import { CartIcon } from "./Menu";
 //context for items
 import { ItemsContext } from "../../context/ItemsContext";
 import { CartItemsContext } from "../../context/CartItemsContext";
+import axios from "axios";
 
 const ItemDetail = (props) => {
-  const { items, cartItems, cartCount, handleAddToCart } = props;
-  console.log(items, cartItems);
+  const { cartItems, cartCount, handleAddToCart } = props;
+  console.log(cartItems);
 
   const { itemId } = useParams();
   console.log(itemId);
-  const thisItem = items.find((item) => item.id === parseInt(itemId));
-  console.log(thisItem);
 
-  var initialQuantity = 0;
-  var thisCartItem;
-  if (thisItem) {
-    thisCartItem = cartItems.find((cartItem) => cartItem.id === thisItem.id);
+  const [activeItem, setActiveItem] = useState({});
+  let initialQuantity = 0;
+  let thisCartItem;
+  if (activeItem) {
+    thisCartItem = cartItems.find((cartItem) => cartItem.id === activeItem.id);
     console.log(thisCartItem);
   }
   if (thisCartItem) {
     initialQuantity = thisCartItem.quantity;
+    console.log("initial quantity", initialQuantity);
   }
 
   const [quantity, setQuantity] = useState(initialQuantity);
   console.log(quantity);
 
+  useEffect(() => {
+    console.log("fetching item detail");
+    axios
+      .get(`/api/items/${itemId}`)
+      .then((res) => {
+        console.log(res.data);
+        setActiveItem(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [itemId]);
+
+  // const activeItem = items.find((item) => item.id === parseInt(itemId));
+  // console.log(activeItem);
+
   const renderPrice = () => {
-    if (thisItem) {
-      if (thisItem.offer) {
+    if (activeItem) {
+      if (activeItem.offer) {
         return (
           <>
-            <strike>Rs {thisItem.cost}</strike> Rs{" "}
-            {thisItem.cost_after_discount}
+            <strike>Rs {activeItem.cost}</strike> Rs{" "}
+            {activeItem.cost_after_discount}
           </>
         );
       } else {
-        return <>Rs {thisItem.cost}</>;
+        return <>Rs {activeItem.cost}</>;
       }
     }
   };
@@ -54,27 +71,27 @@ const ItemDetail = (props) => {
       <div className="details">
         <div className="details-image">
           <img
-            src={thisItem && thisItem.image}
-            alt={(thisItem && thisItem.name) || "image"}
+            src={activeItem && activeItem.image}
+            alt={(activeItem && activeItem.name) || "image"}
           ></img>
         </div>
         <div className="details-info">
           <ul>
             <li>
               <div className="item-name">
-                <h1>{thisItem && thisItem.name}</h1>
+                <h1>{activeItem && activeItem.name}</h1>
               </div>
             </li>
             <li>
               <div className="item-description">
                 <h1>Description:</h1>
-                <p>{thisItem && thisItem.description}</p>
+                <p>{activeItem && activeItem.description}</p>
               </div>
             </li>
             <li>
               <div className="ingredients">
                 <h1>Ingredients:</h1>
-                <p>{thisItem && thisItem.ingredients}</p>
+                <p>{activeItem && activeItem.ingredients}</p>
               </div>
             </li>
 
@@ -101,7 +118,9 @@ const ItemDetail = (props) => {
                 </div>
                 <button
                   className="add-to-cart-btn"
-                  onClick={() => handleAddToCart(thisItem, parseInt(quantity))}
+                  onClick={() =>
+                    handleAddToCart(activeItem, parseInt(quantity))
+                  }
                 >
                   Add to Cart
                 </button>

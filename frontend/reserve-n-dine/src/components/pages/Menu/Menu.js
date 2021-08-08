@@ -12,7 +12,8 @@ import { ItemsContext } from "../../context/ItemsContext";
 import { CartItemsContext } from "../../context/CartItemsContext";
 
 const Menu = (props) => {
-  const { items, cartCount } = props;
+  const { cartCount } = props;
+
   /*===========
   States
   ===========*/
@@ -55,19 +56,27 @@ const Menu = (props) => {
   // ]
 
   const [categories, setCategories] = useState([]);
+  const [items, setItems] = useState([]);
+
+  const [selectedCategory, setSelectedCategory] = useState({});
+  const [selectedParentCategory, setSelectedParentCategory] = useState({});
+  const [selectedItems, setSelectedItems] = useState([]);
   useEffect(() => {
+    axios
+      .get("api/items/")
+      .then((res) => {
+        setItems(res.data);
+        setSelectedItems(res.data);
+      })
+      .catch((err) => console.log(err));
+
     axios
       .get("api/categories/")
       .then((res) => setCategories(res.data))
       .catch((err) => console.log(err));
   }, []);
 
-  //other states
-  const [selectedCategory, setSelectedCategory] = useState({});
-
-  const [selectedParentCategory, setSelectedParentCategory] = useState({});
-
-  const [selectedItems, setSelectedItems] = useState([...items]);
+  
   console.log(items);
 
   /*===========
@@ -147,7 +156,7 @@ const Menu = (props) => {
   return (
     <>
       <MenuContent>
-        <CartIcon cartCount={cartCount}/>
+        <CartIcon cartCount={cartCount} />
 
         <SearchBar />
 
@@ -338,7 +347,7 @@ const Item = ({ item }) => {
   );
 };
 
-export const CartIcon = ({cartCount}) => {
+export const CartIcon = ({ cartCount }) => {
   return (
     <>
       <Link to="/cart">

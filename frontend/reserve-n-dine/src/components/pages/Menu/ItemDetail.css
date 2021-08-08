@@ -182,7 +182,7 @@ li {
   .details-info {
     width: 100%;
     display: flex;
-    justify-content: center;
+    
   }
 
   .details-image img {
