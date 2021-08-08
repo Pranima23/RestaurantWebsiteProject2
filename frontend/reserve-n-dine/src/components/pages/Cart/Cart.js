@@ -10,7 +10,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { GrFormAdd, GrFormSubtract, GrPrevious, GrNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
-import Popup from "../payment/Popup";
+//import Popup from "../payment/Popup";
 import OrderSummary from "../payment/OrderSummary";
 
 // const initialState = [
@@ -175,11 +175,11 @@ const CartTotal = ({ cartTotal }) => {
 };
 
 const CartButtons = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  //const [isOpen, setIsOpen] = useState(false);
 
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  };
+  //const togglePopup = () => {
+    //setIsOpen(!isOpen);
+  //};
   return (
     <div className="cart-btns">
       <Link to="/menu">

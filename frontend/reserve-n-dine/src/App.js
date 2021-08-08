@@ -5,6 +5,7 @@ import Home from "./components/pages/HomePage/Home";
 import Services from "./components/pages/Services/Services";
 import Products from "./components/pages/Products/Products";
 import book from "./components/pages/Reservations/book";
+import ReservationForm from "./components/pages/Reservation/Booking";
 import Menu from "./components/pages/Menu/Menu";
 import SignUp from "./components/pages/SignUp/SignUp";
 import Register from "./components/pages/SignUp/SignUp";
@@ -14,10 +15,11 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
-import "bootstrap/dist/css/bootstrap.min.css";
-import payment from "./components/pages/payment/payment";
-import ReservationForm from "./components/pages/Reservation/Booking";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Payment from "./components/pages/payment/payment";
+import Popup from "./components/pages/payment/Popup"
 import Esewa from "./components/pages/payment/Esewa";
+import esewaverify from "./components/pages/payment/esewaverify";
 import OrderSummary from "./components/pages/payment/OrderSummary";
 // import Chatbot from "./components/Chatbot";
 
@@ -112,39 +114,38 @@ function App() {
     return priceTotal;
   };
 
-  const LocalStoragetoOrder = JSON.parse(
-    localStorage.getItem("cartItems") || "[]"
-  );
+  //const LocalStoragetoOrder = JSON.parse(localStorage.getItem("cartItems") || "{");
 
-  const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
+  //const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
 
-  useEffect(() => {
-    localStorage.getItem("cartItems", JSON.stringify(orderItems));
-  }, [orderItems]);
-  console.log(orderItems);
 
-  {
-    /*function proceed (){
+ // useEffect(() =>{
+  //  localStorage.getItem("cartItems", JSON.stringify(orderItems))
+    
+ //    }, [orderItems]);
+  //   console.log(orderItems)
+
+ {/*  useEffect(() => {
+     orderItems.forEach(item => {
+      axios
+   .post("api/orderdetails/", {
+       order: 1,
+       item:orderItem.item,
+       quantity:orderItem.quantity  ,   
+   })
+  .then((res) => console.log(res));
+})
+},[]); 
+*/}
+ 
+ {/*function proceed (){
     console.log("proceeding to next page");
     const orderItems = localStorage.getItem("cartItems");
     console.log(orderItems)
     return orderItems;
-  }*/
-  }
-  const calculateorderItemTotal = (orderItem) => {
-    console.log(orderItem);
-    const quantity = orderItem.quantity;
-    const rate = parseFloat(orderItem.cost);
-    return quantity * rate;
-  };
+  }*/}
 
-  const calculateOrderTotal = () => {
-    let priceTotal = 0;
-    orderItems.forEach((orderItem) => {
-      priceTotal += calculateorderItemTotal(orderItem);
-    });
-    return priceTotal;
-  };
+
 
   return (
     <Router>
@@ -185,17 +186,28 @@ function App() {
           render={(props) => (
             <OrderSummary
               {...props}
-              orderItems={orderItems}
-              calculateorderItemTotal={calculateorderItemTotal}
-              calculateOrderTotal={calculateOrderTotal}
-              // handleproceed={proceed}
+             
+              orderItems={cartItems}
+              calculateorderItemTotal={calculateItemTotal}
+              calculateOrderTotal={calculateCartTotal}
+             // handleproceed={proceed}
             />
           )}
         />
-        <Route path="/esewa" component={Esewa} />
+         <Route path="/popup" component={Popup} />
+        <Route path="/esewa" 
+        render={(props) => (
+          <Esewa 
+          {...props}
+          orderItems={cartItems}
+          calculateOrderTotal={calculateCartTotal}
+          />
+        )}
+      />
+      <Route path="/esewaverify" component={esewaverify} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/log-in" component={Login} />
-        <Route path="/payment" component={payment} />
+        <Route path="/payment" component={Payment} />
         <Route path="/register" component={Register} />
         <Route
           path="/reservation"
