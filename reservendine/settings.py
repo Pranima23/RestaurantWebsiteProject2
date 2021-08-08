@@ -81,11 +81,12 @@ WSGI_APPLICATION = 'reservendine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reservendine',
-        'USER': 'root',
-        'PASSWORD': '12345',
+        'NAME': 'reservendinedb',
+        'USER': 'pranima23',
+        'PASSWORD': 'reservendine2dbpw',
         'HOST': 'localhost',
         'PORT': '3306',
+        
     }
 }
 

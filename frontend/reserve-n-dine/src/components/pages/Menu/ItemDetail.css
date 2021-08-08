@@ -161,7 +161,7 @@ li {
 }
 
 .add-to-cart-btn:hover::before {
-  transform: scaleX(55);
+  transform: scaleX(30);
 }
 
 .add-to-cart-btn:hover {
@@ -182,7 +182,7 @@ li {
   .details-info {
     width: 100%;
     display: flex;
-    justify-content: center;
+    
   }
 
   .details-image img {

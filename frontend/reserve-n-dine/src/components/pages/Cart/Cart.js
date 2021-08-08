@@ -11,6 +11,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { GrFormAdd, GrFormSubtract, GrPrevious, GrNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import Popup from "../payment/Popup";
+import OrderSummary from "../payment/OrderSummary";
 
 // const initialState = [
 //   {
@@ -53,6 +54,8 @@ const Cart = (props) => {
     calculateItemTotal,
     calculateCartTotal,
   } = props;
+
+  
 
   return (
     <>
@@ -118,13 +121,27 @@ const CartItemsTable = (props) => {
 const CartItem = (props) => {
   const { cartItem, onIncrement, onDecrement, onDelete, itemTotal } = props;
   const { name, cost, id, image, quantity } = cartItem;
+  const renderPrice = () => {
+    if (cartItem) {
+      if (cartItem.offer) {
+        return (
+          <>
+            <strike>Rs {cartItem.cost}</strike>
+            <br></br>Rs {cartItem.cost_after_discount}
+          </>
+        );
+      } else {
+        return <>Rs {cartItem.cost}</>;
+      }
+    }
+  };
   return (
     <tr className="div-row">
       <td className="div-col cart-item-img-container">
         <img className="cart-item-img" src={image} alt={name} />
       </td>
       <td className="div-col cart-item-name">{name}</td>
-      <td className="div-col cart-item-price">Rs. {cost}</td>
+      <td className="div-col cart-item-price">{renderPrice()}</td>
       <td className="div-col cart-item-qty">
         <button className="dcr-btn" onClick={() => onDecrement(cartItem)}>
           <GrFormSubtract style={{ fontSize: "0.8em" }} />
@@ -135,7 +152,7 @@ const CartItem = (props) => {
           <GrFormAdd style={{ fontSize: "0.8em" }} />
         </button>
       </td>
-      <td className="div-col cart-item-total">Rs. {itemTotal(cartItem)}</td>
+      <td className="div-col cart-item-total">Rs {itemTotal(cartItem)}</td>
       <td className="div-col cart-item-del">
         <button
           className="cart-item-del-btn"
@@ -152,7 +169,7 @@ const CartTotal = ({ cartTotal }) => {
   return (
     <div className="cart-total">
       <div className="cart-total-header">Total</div>
-      <div className="cart-total-amount">Rs. {cartTotal()}</div>
+      <div className="cart-total-amount">Rs {cartTotal()}</div>
     </div>
   );
 };
@@ -171,19 +188,21 @@ const CartButtons = () => {
           Add more items
         </button>
       </Link>
+
       <div>
-        <button className="proceed-btn" onClick={togglePopup}>
-          Proceed
-          <FaChevronRight style={{ marginLeft: "1em", fontSize: "0.8em" }} />
+      <Link to="/OrderSummary">
+        <button className="proceed-btn"  >
+         <FaChevronRight style={{ marginLeft: "1em", fontSize: "0.8em" }} />Proceed
         </button>
-        {isOpen && (
+      </Link>
+       {/*} {isOpen && (
           <Popup
             content={
               <>
                 <b>Payment Options</b>
                 <div className="payment-option">
-                  <Link to="/payment">
-                    <button className="pay-with-esewa">eSewa</button>
+                  <Link to="/checkout ">
+                   <button className="pay-with-esewa">eSewa</button>
                   </Link>
                   <button className="pay-with-cash">Cash</button>
                 </div>
@@ -191,8 +210,10 @@ const CartButtons = () => {
             }
             handleClose={togglePopup}
           />
-        )}
+          )}*/}
       </div>
     </div>
+
   );
 };
+

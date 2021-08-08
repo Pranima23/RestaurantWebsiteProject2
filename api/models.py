@@ -98,11 +98,12 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-
+    
     def categories(self):
         if self.category:
             return ', '.join([c.name for c in self.category.all()])
 
+    @property
     def ingredients(self):
         if self.ingredient:
             return ', '.join([i.name for i in self.ingredient.all()])
