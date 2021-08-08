@@ -13,7 +13,7 @@ function Register() {
   async function SignUp(){
     let item =(name,email,password,repassword)
 
-    let result = await fetch("/api/users/",{
+    let result = await  fetch("http://127.0.0.1:8000/api/users/",{
     method:"POST",
     body:JSON.stringify(item),
     headers:{
@@ -22,7 +22,7 @@ function Register() {
     }
   })
     result=await result.json()
-    localStorage.setItem("user.info", JSON.stringify(result))
+    localStorage.setItem("item", JSON.stringify(result))
     history.pushState('/');
   }
   

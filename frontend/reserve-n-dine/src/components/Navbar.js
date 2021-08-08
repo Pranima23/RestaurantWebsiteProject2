@@ -41,7 +41,7 @@ function Navbar({cartCount}) {
         <IconContext.Provider value={{color:'#fff'}}>
            <div className="navbar">
                <div className="navbar-container container">
-                   <Link className="navbar-logo">
+                   <Link to='/' className="navbar-logo">
                        <FaKeybase className="navbar-icon"/> 
                         Reserve N' Dine
                    </Link> {/* This is the place where the link is established using the word */}

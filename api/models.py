@@ -198,11 +198,14 @@ class OrderDetail(models.Model):
 
     @property
     def order_item_cost(self):
+        if self.item is None:
+            return "None"
         return self.quantity * self.item.cost
 
     @property
     def order_item_cost_after_discount(self):
-        return self.quantity * self.item.cost_after_discount
+        if self.item is not None:
+             return self.quantity * self.item.cost_after_discount
 
 #Invoice models
 class Invoice(models.Model):

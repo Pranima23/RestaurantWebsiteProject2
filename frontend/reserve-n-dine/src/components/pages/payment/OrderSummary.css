@@ -108,7 +108,7 @@
   }
 
     
-  .btn--mobile1 {
+.btn--mobile1 {
     border-radius: 4px;
     width: 80%;
     text-decoration: none;
@@ -127,6 +127,27 @@
     padding: 8px 20px;
     border: 1px solid #1c2237;
     transition: all 0.3s ease-out;
+  }
+.title{
+  color: #1c2237;
+}
+  .pay-with-esewa{
+
+    background-color: green;
+    color: white;
+    height: 25px;
+    width: 60px;
+  }
+  .pay-with-cash{
+    height: 25px;
+    width: 60px;
+  
+  }
+  
+  .payment-option{
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
   }
   /* Social Icons */
   .social-icon-link {

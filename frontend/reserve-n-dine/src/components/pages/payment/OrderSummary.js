@@ -4,13 +4,12 @@ import Popup from "./Popup";
 import { Link } from "react-router-dom";
 import { Button } from '../../Button';
 import "./OrderSummary.css";
-import { AiOutlineDelete } from "react-icons/ai";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { GrFormAdd, GrFormSubtract, GrPrevious, GrNext } from "react-icons/gr";
-import Esewa from './Esewa';
+
 
 const OrderSummary = (props) => {
 const {handleproceed, orderItems ,calculateorderItemTotal,calculateOrderTotal }= props;
+
+
 return (
         <>
         <OrderContent>
@@ -77,13 +76,27 @@ const OrderTable = (props) => {
 const OrderItem = (props) => {
   const { orderItem, calculateorderItemTotal } = props;
   const { name, cost, id, image, quantity } = orderItem || [];
+  const renderPrice = () => {
+    if (orderItem) {
+      if (orderItem.offer) {
+        return (
+          <>
+            <strike>Rs. {orderItem.cost}</strike>
+            <br></br>Rs. {orderItem.cost_after_discount}
+          </>
+        );
+      } else {
+        return <>Rs. {orderItem.cost}</>;
+      }
+    }
+  }
   return (
     <tr className="div-row">
       <td className="div-col cart-item-img-container">
         <img className="cart-item-img" src={image} alt={name} />
       </td>
       <td className="div-col cart-item-name">{name}</td>
-      <td className="div-col cart-item-price">Rs. {cost}</td>
+      <td className="div-col cart-item-price">Rs. {renderPrice()}</td>
       <td className="div-col cart-item-qty">
         {quantity}  </td>
       <td className="div-col cart-item-total">Rs. {calculateorderItemTotal(orderItem)}</td>
@@ -104,6 +117,11 @@ const OrderTotal = ({orderTotal}) =>{
 };
 
 const Checkout =() =>{
+  const [isOpen, setisOpen] = useState(false);
+
+  const togglePopup = () => {
+    setisOpen(!isOpen)
+  }
   return(
     <div className='checkout-container1'>
     <section className='checkout-subscription'>
@@ -140,23 +158,36 @@ const Checkout =() =>{
               placeholder='Your address'
             />
 
-      <Link to = "/esewa"  className="btn-link1">
-        <Button onclick={Esewa} buttonStyle='btn--outline1' buttonSize='btn--mobile1'>
-          Place order
-        </Button>
-        {/* <li>
-          Cash On delivery 
-        </li>
-        <li>
-          Esewa
-        </li> */}
-      </Link>
+        <div className="btn-link1">
+        <input  type ="button"  value=" Place order" buttonStyle='btn--outline1' buttonSize='btn--mobile1' onClick={togglePopup}>
+        </input>
+        </div>
+      
+
+        {isOpen && (
+          <Popup
+            content={
+              <>
+                <div className="title">
+                <b>Payment Options</b></div>
+                <div className="payment-option">
+                  <Link to="/esewa">
+                   <button className="pay-with-esewa">eSewa</button>
+                  </Link>
+                  <Link to="/payment">
+                  <button className="pay-with-cash">Cash</button>
+                  </Link>
+                </div>
+              </>
+            }
+            handleClose={togglePopup}
+          />
+        )}
+     
      </form>
     </div>
     </section>
     </div>  
   )
-};
-
-
+}
      
