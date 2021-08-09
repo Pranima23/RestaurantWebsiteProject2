@@ -8,10 +8,7 @@ const Esewa = (props) => {
         localStorage.getItem("currentorder") || "[]"
     );
 
-    return ( <
-        >
-        <
-        form action = "https://uat.esewa.com.np/epay/main"
+    return ( < form action = "https://uat.esewa.com.np/epay/main"
         method = "POST" >
         <
         input value = { calculateOrderTotal() }
@@ -49,14 +46,10 @@ const Esewa = (props) => {
         <
         input value = "http://merchant.com.np/page/esewa_payment_failed?q=fu"
         type = "text"
-        name = "fu" >
-        { " " } <
-        /input>{" "} <
+        name = "fu" / >
+        <
         input value = "Submit"
-        type = "submit" > { " " } <
-        /input>{" "} <
-        /form>{" "} <
-        />
+        type = "submit" / > < /form>
     );
 };
 export default Esewa;
