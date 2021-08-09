@@ -5,12 +5,8 @@ const Esewa = (props, ) => {
 
     const {calculateOrderTotal,orderItems} = props;
 
-    
-    
-    
 
-   
- 
+    
     return (
     
     <form action="https://uat.esewa.com.np/epay/main" method="POST">
@@ -25,12 +21,7 @@ const Esewa = (props, ) => {
     <input value="http://merchant.com.np/page/esewa_payment_failed?q=fu" type="text" name="fu"></input>
     <input value="Submit" type="submit"></input>
     </form>
-    
-   
-    );
-
-
-};
-
-export default Esewa;
+    )
+}
+export default Esewa
 
