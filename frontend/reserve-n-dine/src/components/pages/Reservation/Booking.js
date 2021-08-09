@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./booking.css";
+import {Button} from '../../Button';
 
 //Service time
 const serviceTimeInHour = 1;
@@ -229,6 +231,12 @@ const ReservationForm = () => {
   
   console.log("Party Size", partySize);
   console.log("AVAILABLE SEAT PLANS", availableSeatPlans);
+  const myStyle={
+    color: "black",
+    backgroundColor: "#78bd",
+    padding: "8px",
+    fontFamily: "Arial"
+  };
   return (
     <form
       onSubmit={(e) =>
@@ -243,32 +251,41 @@ const ReservationForm = () => {
         )
       }
     >
-      <label>Check-in</label>
-      <DatePicker
+      <label className="checkin">Check-in 
+      <br>
+      </br>
+      Enter Valid date and time
+      </label> 
+      <DatePicker 
         required
         selected={checkIn}
         minDate={new Date()}
         onChange={handleChangeCheckIn}
+        placeholderText=" Enter Valid date and time "
         showTimeSelect
         showYearDropdown
         dateFormat="Pp"
         filterTime={filterPassedTime}
-      />
+      /> 
       {/* <p>{checkOut}</p> */}
-      <label>Party Size</label>
+     
+      <label className="partysize">Party Size</label>
       <select value={partySize} onChange={handleChangePartySize} required>
-        <option value="" selected hidden>
-          Select no. of people
-        </option>
-        <option value="2">2</option>
-        <option value="4">4</option>
-        <option value="6">6</option>
-        <option value="8">8</option>
-        <option value="10">10</option>
-        <option value="12">12</option>
+            <option value="" selected hidden>
+              Select no. of people
+            </option>
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="6">6</option>
+          <option value="8">8</option>
+          <option value="10">10</option>
+          <option value="12">12</option>
+          
       </select>
-      <input type="submit" value="Find a table" />
-      {partySize}
+      <Button>
+        <b style={myStyle}> Find a table! </b>
+      </Button>
+      <p className="tablemessagedisplay"> Here, you need to pass the value for showing the table availability!</p>
       {/* {checkIn && new Date(checkIn).getTime()} */}
       {/* {availableSeatPlansList && availableSeatPlansList[0].id} */}
     </form>
@@ -276,3 +293,5 @@ const ReservationForm = () => {
 };
 
 export default ReservationForm;
+
+//# sourceMappingURL=/path/to/Booking.js.map

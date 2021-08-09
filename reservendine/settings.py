@@ -92,9 +92,15 @@ WSGI_APPLICATION = 'reservendine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+<<<<<<< HEAD
         'NAME': 'reservendinedb',
         'USER': 'root',
         'PASSWORD': 'reserve',
+=======
+        'NAME': 'reservendine',
+        'USER': 'root',
+        'PASSWORD': '12345',
+>>>>>>> origin/Siza
         'HOST': 'localhost',
         'PORT': '3306',
         
