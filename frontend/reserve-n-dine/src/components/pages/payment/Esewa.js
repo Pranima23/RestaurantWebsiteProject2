@@ -21,7 +21,7 @@ const Esewa = (props, ) => {
     <input value="0" name="pdc" type="text"/>
     <input value="EPAYTEST" name="scd" type="text"/>
     <input value="ee2c3ca1-696b-4cc5-a6be-2c40d929d453" name="pid" type="text"/>
-    <input value="http://localhost:3000" type="text" name="su"/>
+    <input value="http://merchant.com.np/page/esewa_payment_success?q=su" type="text" name="su"/>
     <input value="http://merchant.com.np/page/esewa_payment_failed?q=fu" type="text" name="fu"></input>
     <input value="Submit" type="submit"></input>
     </form>

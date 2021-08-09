@@ -4,7 +4,8 @@ import { useHistory } from "react-router-dom";
 import "./Login.css";
 import axios from "axios";
 
-function Login() {
+function Login(props) {
+  const {handleLoginState} = props
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -19,11 +20,31 @@ function Login() {
     console.log("Trying to log in...");
     console.log(userInfo);
     axios
-      .post("api-auth/login", userInfo)
-      .then((res) => console.log(res))
+      .post("api/token/", userInfo)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("access_token", res.data.access);
+        localStorage.setItem("refresh_token", res.data.refresh);
+        handleLoginState(true);
+        // axios
+        //   .post("api/token/refresh/", { refresh: localStorage.getItem('refresh_token') })
+        //   .then((response) => {
+        //     localStorage.setItem("access_token", response.data.access);
+        //     localStorage.setItem("refresh_token", response.data.refresh);
+        //     console.log("refreshed token", response)
+        //     axios.defaults.headers["Authorization"] =
+        //       "Bearer " + response.data.access;
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
+        axios.defaults.headers.post["Authorization"] =
+          "Bearer  " + localStorage.getItem("access_token");
+        
+      })
       .catch((err) => console.log(err));
   }
-  
+
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   const history = useHistory();
@@ -69,6 +90,7 @@ function Login() {
               onChange={changeHandler}
               type="email"
               placeholder="Your Email"
+              required
             />
             <input
               className="footer-input"
@@ -77,6 +99,7 @@ function Login() {
               onChange={changeHandler}
               type="password"
               placeholder="Your password"
+              required
             />
             <Button buttonStyle="btn--outline">Login </Button>
           </form>

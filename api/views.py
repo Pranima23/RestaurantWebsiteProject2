@@ -24,6 +24,8 @@ class OfferView(viewsets.ModelViewSet):
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
 
 #Ingredient view
 class IngredientView(viewsets.ModelViewSet):
@@ -34,6 +36,7 @@ class IngredientView(viewsets.ModelViewSet):
 class ItemView(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 #Ingredients in Item view
 class IngredientsInItemView(viewsets.ModelViewSet):

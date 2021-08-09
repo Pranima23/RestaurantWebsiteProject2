@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./booking.css";
+import { Button } from "../../Button";
 
 //Service time
 const serviceTimeInHour = 1;
@@ -152,7 +154,7 @@ const ReservationForm = () => {
     phoneNo: "",
   });
 
-//   const [availableSeatPlansList, setAvailableSeatPlansList] = useState([]);
+  //   const [availableSeatPlansList, setAvailableSeatPlansList] = useState([]);
 
   const [seatPlans, setSeatPlans] = useState();
   const [reservations, setReservations] = useState();
@@ -198,23 +200,38 @@ const ReservationForm = () => {
       tables,
       approxCheckOut
     );
-    setReservationDetails({...reservationDetails, availableSeatPlans: availableSeatPlans})
+    setReservationDetails({
+      ...reservationDetails,
+      availableSeatPlans: availableSeatPlans,
+    });
   };
 
   //api calls
   useEffect(() => {
     axios
-      .get("api/seatplans/")
+      .get("api/seatplans/", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
       .then((res) => setSeatPlans(res.data))
       .catch((err) => console.log(err));
 
     axios
-      .get("api/reservations/")
+      .get("api/reservations/", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
       .then((res) => setReservations(res.data))
       .catch((err) => console.log(err));
 
     axios
-      .get("api/tables/")
+      .get("api/tables/", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
       .then((res) => setTables(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -222,13 +239,20 @@ const ReservationForm = () => {
   console.log("Reservations", reservations);
   console.log("Tables", tables);
 
-  const { partySize, checkIn, approxCheckOut, availableSeatPlans } = reservationDetails;
+  const { partySize, checkIn, approxCheckOut, availableSeatPlans } =
+    reservationDetails;
 
   console.log("Checkin", checkIn);
   //   console.log("Checkout", approxCheckOut);
-  
+
   console.log("Party Size", partySize);
   console.log("AVAILABLE SEAT PLANS", availableSeatPlans);
+  const myStyle = {
+    color: "black",
+    backgroundColor: "#78bd",
+    padding: "8px",
+    fontFamily: "Arial",
+  };
   return (
     <form
       onSubmit={(e) =>
@@ -243,19 +267,25 @@ const ReservationForm = () => {
         )
       }
     >
-      <label>Check-in</label>
+      <label className="checkin">
+        Check-in
+        <br></br>
+        Enter Valid date and time
+      </label>
       <DatePicker
         required
         selected={checkIn}
         minDate={new Date()}
         onChange={handleChangeCheckIn}
+        placeholderText=" Enter Valid date and time "
         showTimeSelect
         showYearDropdown
         dateFormat="Pp"
         filterTime={filterPassedTime}
       />
       {/* <p>{checkOut}</p> */}
-      <label>Party Size</label>
+
+      <label className="partysize">Party Size</label>
       <select value={partySize} onChange={handleChangePartySize} required>
         <option value="" selected hidden>
           Select no. of people
@@ -267,8 +297,13 @@ const ReservationForm = () => {
         <option value="10">10</option>
         <option value="12">12</option>
       </select>
-      <input type="submit" value="Find a table" />
-      {partySize}
+      <Button>
+        <b style={myStyle}> Find a table! </b>
+      </Button>
+      <p className="tablemessagedisplay">
+        {" "}
+        Here, you need to pass the value for showing the table availability!
+      </p>
       {/* {checkIn && new Date(checkIn).getTime()} */}
       {/* {availableSeatPlansList && availableSeatPlansList[0].id} */}
     </form>
@@ -276,3 +311,5 @@ const ReservationForm = () => {
 };
 
 export default ReservationForm;
+
+//# sourceMappingURL=/path/to/Booking.js.map

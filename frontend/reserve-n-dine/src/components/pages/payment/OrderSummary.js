@@ -140,22 +140,43 @@ const Checkout = (props) => {
     };
     console.log("handling post");
     axios
-      .post("api/orders/", order)
+      .post("api/orders/", order, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
       .then((resOrders) => {
         console.log("response from order post", resOrders);
         axios
-          .post("api/invoices/", {
-            order: resOrders.data.id,
-          })
+          .post(
+            "api/invoices/",
+            {
+              order: resOrders.data.id,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("access_token"),
+              },
+            }
+          )
           .then((resInvoices) => {
             console.log("response from invoices post", resInvoices, resOrders);
             orderItems.forEach((item) => {
               axios
-                .post("api/orderdetails/", {
-                  order: resOrders.data.id,
-                  item: item.id,
-                  quantity: item.quantity,
-                })
+                .post(
+                  "api/orderdetails/",
+                  {
+                    order: resOrders.data.id,
+                    item: item.id,
+                    quantity: item.quantity,
+                  },
+                  {
+                    headers: {
+                      Authorization:
+                        "Bearer " + localStorage.getItem("access_token"),
+                    },
+                  }
+                )
                 .then((resOrderDetails) => {
                   console.log(
                     "response from orderdetails post",
@@ -163,13 +184,22 @@ const Checkout = (props) => {
                     resInvoices,
                     resOrders
                   );
-                  console.log('invoice no', resInvoices.data.invoice_no)
-                  console.log('order detail id', resOrderDetails.data.id)
+                  console.log("invoice no", resInvoices.data.invoice_no);
+                  console.log("order detail id", resOrderDetails.data.id);
                   axios
-                    .post("api/invoicelineitems/", {
-                      "invoice": resInvoices.data.invoice_no,
-                      "order_detail": resOrderDetails.data.id,
-                    })
+                    .post(
+                      "api/invoicelineitems/",
+                      {
+                        invoice: resInvoices.data.invoice_no,
+                        order_detail: resOrderDetails.data.id,
+                      },
+                      {
+                        headers: {
+                          Authorization:
+                            "Bearer " + localStorage.getItem("access_token"),
+                        },
+                      }
+                    )
                     .then((resInvoiceLineItems) => {
                       console.log(
                         "response from invoice line items post",

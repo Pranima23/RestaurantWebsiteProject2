@@ -1,0 +1,29 @@
+.partysize, .checkin, .findatable, .wrapped{
+    width: 65%;
+    padding: 3% 0;
+    background-color: #78bd;
+    color: white;
+    margin: 4% 1.5%;
+    font-family: "Roboto";
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 2px;
+    text-align: center;
+}
+
+.tablemessagedisplay{
+   display: flex;
+    width: 65%;
+    padding: 2% 0;
+    position:static;
+    left:30%;
+    background-color: transparent;
+    color: black;
+    margin: 2% 5%;
+    font-family: "Roboto";
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 2px;
+    text-align: center;
+    align-items: center;
+}

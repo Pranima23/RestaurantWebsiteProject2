@@ -27,14 +27,18 @@ const ItemDetail = (props) => {
     initialQuantity = thisCartItem.quantity;
     console.log("initial quantity", initialQuantity);
   }
-
+  
   const [quantity, setQuantity] = useState(initialQuantity);
   console.log(quantity);
 
   useEffect(() => {
     console.log("fetching item detail");
     axios
-      .get(`/api/items/${itemId}`)
+      .get(`/api/items/${itemId}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
       .then((res) => {
         console.log(res.data);
         setActiveItem(res.data);
