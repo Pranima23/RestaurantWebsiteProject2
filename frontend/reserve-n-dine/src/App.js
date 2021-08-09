@@ -16,8 +16,8 @@ import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Payment from "./components/pages/payment/payment";
-import Popup from "./components/pages/payment/Popup"
+import Payment from "./components/pages/payment/Payment";
+import Popup from "./components/pages/payment/Popup";
 import Esewa from "./components/pages/payment/Esewa";
 import esewaverify from "./components/pages/payment/esewaverify";
 import OrderSummary from "./components/pages/payment/OrderSummary";
@@ -113,7 +113,6 @@ function App() {
     });
     return priceTotal;
   };
-
   //const LocalStoragetoOrder = JSON.parse(localStorage.getItem("cartItems") || "{");
 
   //const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
@@ -139,11 +138,32 @@ function App() {
 */}
  
  {/*function proceed (){
+=======
+>>>>>>> origin/pranima
     console.log("proceeding to next page");
     const orderItems = localStorage.getItem("cartItems");
     console.log(orderItems)
     return orderItems;
+
+
   }*/}
+
+
+ 
+  // const calculateorderItemTotal = (orderItem) => {
+  //   console.log(orderItem);
+  //   const quantity = orderItem.quantity;
+  //   const rate = parseFloat(orderItem.cost);
+  //   return quantity * rate;
+  // };
+
+  // const calculateOrderTotal = () => {
+  //   let priceTotal = 0;
+  //   orderItems.forEach((orderItem) => {
+  //     priceTotal += calculateorderItemTotal(orderItem);
+  //   });
+  //   return priceTotal;
+  // };
 
 
 
@@ -186,11 +206,13 @@ function App() {
           render={(props) => (
             <OrderSummary
               {...props}
+
              
               orderItems={cartItems}
               calculateorderItemTotal={calculateItemTotal}
               calculateOrderTotal={calculateCartTotal}
              // handleproceed={proceed}
+
             />
           )}
         />
