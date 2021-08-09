@@ -1,10 +1,10 @@
-import React, { Component, useState } from "react";
-import Cart from "../Cart/Cart";
-import Popup from "./Popup";
-import { Link } from "react-router-dom";
-import { Button } from "../../Button";
-import "./OrderSummary.css";
-import axios from "axios";
+import React, { Component, useState } from 'react';
+import Cart from '../Cart/Cart';
+import Popup from './Popup';
+import { Link } from 'react-router-dom';
+import { Button } from '../../Button';
+import './OrderSummary.css';
+import axios from 'axios';
 
 const OrderSummary = (props) => {
   const {
@@ -129,50 +129,51 @@ const Checkout = (props) => {
     setisOpen(!isOpen);
   };
 
-  const [responseData, setresponseData] = useState();
-
   const { orderItems } = props;
+
+  // payment methods post
 
   const handlePlaceOrder = () => {
     togglePopup();
     const order = {
       reservation_detail: 1,
     };
-    console.log("handling post");
+    console.log('handling post');
     axios
-      .post("api/orders/", order)
+      .post('api/orders/', order)
       .then((resOrders) => {
-        console.log("response from order post", resOrders);
+        console.log('response from order post', resOrders);
+        localStorage.setItem('currentorder', JSON.stringify(resOrders.data.id));
         axios
-          .post("api/invoices/", {
+          .post('api/invoices/', {
             order: resOrders.data.id,
           })
           .then((resInvoices) => {
-            console.log("response from invoices post", resInvoices, resOrders);
+            console.log('response from invoices post', resInvoices, resOrders);
             orderItems.forEach((item) => {
               axios
-                .post("api/orderdetails/", {
+                .post('api/orderdetails/', {
                   order: resOrders.data.id,
                   item: item.id,
                   quantity: item.quantity,
                 })
                 .then((resOrderDetails) => {
                   console.log(
-                    "response from orderdetails post",
+                    'response from orderdetails post',
                     resOrderDetails,
                     resInvoices,
                     resOrders
                   );
-                  console.log('invoice no', resInvoices.data.invoice_no)
-                  console.log('order detail id', resOrderDetails.data.id)
+                  console.log('invoice no', resInvoices.data.invoice_no);
+                  console.log('order detail id', resOrderDetails.data.id);
                   axios
-                    .post("api/invoicelineitems/", {
-                      "invoice": resInvoices.data.invoice_no,
-                      "order_detail": resOrderDetails.data.id,
+                    .post('api/invoicelineitems/', {
+                      invoice: resInvoices.data.invoice_no,
+                      order_detail: resOrderDetails.data.id,
                     })
                     .then((resInvoiceLineItems) => {
                       console.log(
-                        "response from invoice line items post",
+                        'response from invoice line items post',
                         resInvoiceLineItems,
                         resOrderDetails,
                         resInvoices,
@@ -181,22 +182,22 @@ const Checkout = (props) => {
                     })
                     .catch((errInvoiceLineItems) => {
                       console.log(
-                        "error from invoice line items",
+                        'error from invoice line items',
                         errInvoiceLineItems
                       );
                     });
                 })
                 .catch((errOrderDetails) => {
-                  console.log("error from order details", errOrderDetails);
+                  console.log('error from order details', errOrderDetails);
                 });
             });
           })
           .catch((errInvoices) => {
-            console.log("error from invoices post", errInvoices);
+            console.log('error from invoices post', errInvoices);
           });
       })
       .catch((errOrders) => {
-        console.log("error from orders post", errOrders);
+        console.log('error from orders post', errOrders);
       });
     //let orderid
     // axios
@@ -245,18 +246,29 @@ const Checkout = (props) => {
     //     // const orderid = res.data.id;
     //   })
     //   .catch((errOrders) => console.log(errOrders));
- };
-// payment methods post
-//  const handlePaymentMethod = ()=> {
-//    const payment ={
-//     payment_method_name: "eSewa",
-//    } ;
-//   axios 
-//   .post("api/paymentmethods/",payment)
-//   .then((res) =>{console.log(res)})
-//   .catch((err) => console.log(err))
-//   console.log(payment);
-// };
+  };
+
+  const handlePayment = (e) => {
+    e.preventDefault();
+    axios
+      .post("api/paymentmethods/", {
+        payment_method_name: "eSewa",
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+  };
+  const handlePaymentCash = () => {
+   
+    axios
+      .post('api/paymentmethods/', {
+        payment_method_name: 'Cash on arrival',
+      })
+      .then(function (response) {
+        console.log(response);
+      });
+  };
   return (
     <div className="checkout-container1">
       <section className="checkout-subscription">
@@ -310,10 +322,14 @@ const Checkout = (props) => {
                     </div>
                     <div className="payment-option">
                       <Link to="/esewa">
-                        <button className="pay-with-esewa" >eSewa</button>
+                        <button
+                          className="pay-with-esewa"
+                          onclick={handlePayment}>
+                          eSewa
+                        </button>
                       </Link>
-                      <Link to="/payment">
-                        <button className="pay-with-cash" >Cash</button>
+                      <Link to="/payment" onclick={handlePaymentCash}>
+                        <button className="pay-with-cash" > Cash</button>
                       </Link>
                     </div>
                   </>

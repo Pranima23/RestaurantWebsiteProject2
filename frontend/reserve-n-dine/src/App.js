@@ -165,7 +165,8 @@ function App() {
   //   return priceTotal;
   // };
 
-
+  const currentOrderFromLocalStorage = JSON.parse(
+    localStorage.getItem("currentorder") || "[]" );
 
   return (
     <Router>
@@ -226,7 +227,15 @@ function App() {
           />
         )}
       />
-      <Route path="/esewaverify" component={esewaverify} />
+      <Route path="/esewaverify"
+       render={(props) => (
+        <Esewa 
+        {...props}
+        orderItems={cartItems}
+        calculateOrderTotal={calculateCartTotal}
+        />
+        )} 
+        />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/log-in" component={Login} />
         <Route path="/payment" component={Payment} />
