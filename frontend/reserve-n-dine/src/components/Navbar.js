@@ -6,7 +6,7 @@ import {FaBars, FaTimes, FaKeybase , FaCartPlus, FaRobot} from 'react-icons/fa';
 import {IconContext} from 'react-icons/lib';
 // import Chatbot from './Chatbot';
 
-function Navbar() {
+function Navbar({cartCount}) {
     const [click, setClick] = useState(false)
     const [button, setButton] =useState(true)
     const handleClick = () =>{
@@ -41,7 +41,7 @@ function Navbar() {
         <IconContext.Provider value={{color:'#fff'}}>
            <div className="navbar">
                <div className="navbar-container container">
-                   <Link className="navbar-logo">
+                   <Link to='/' className="navbar-logo">
                        <FaKeybase className="navbar-icon"/> 
                         Reserve N' Dine
                    </Link> {/* This is the place where the link is established using the word */}
@@ -75,8 +75,13 @@ function Navbar() {
                               aria-label='Cart'
                             >
                         <FaCartPlus/>
+                        <span className="nav-cart-items-no">{cartCount}</span>
                         </Link>
-                        
+                        <li className="nav-item">
+                            <Link to='/reservations' className='nav-links'>
+                                Reservation
+                            </Link>
+                        </li>
                         <li className="nav-btn">
                             { button ?(
                                 <Link to='/register' className="btn-link">

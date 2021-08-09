@@ -12,7 +12,8 @@ import { ItemsContext } from "../../context/ItemsContext";
 import { CartItemsContext } from "../../context/CartItemsContext";
 
 const Menu = (props) => {
-  const { items } = props;
+  const { cartCount } = props;
+
   /*===========
   States
   ===========*/
@@ -55,20 +56,28 @@ const Menu = (props) => {
   // ]
 
   const [categories, setCategories] = useState([]);
+  const [items, setItems] = useState([]);
+
+  const [selectedCategory, setSelectedCategory] = useState({});
+  const [selectedParentCategory, setSelectedParentCategory] = useState({});
+  const [selectedItems, setSelectedItems] = useState([]);
   useEffect(() => {
+    axios
+      .get("api/items/")
+      .then((res) => {
+        setItems(res.data);
+        setSelectedItems(res.data);
+      })
+      .catch((err) => console.log(err));
+
     axios
       .get("api/categories/")
       .then((res) => setCategories(res.data))
       .catch((err) => console.log(err));
   }, []);
 
-  //other states
-  const [selectedCategory, setSelectedCategory] = useState({});
-
-  const [selectedParentCategory, setSelectedParentCategory] = useState({});
-
-  const [selectedItems, setSelectedItems] = useState([...items]);
-  console.log(items)
+  
+  console.log(items);
 
   /*===========
   Variables
@@ -147,7 +156,7 @@ const Menu = (props) => {
   return (
     <>
       <MenuContent>
-        <CartIcon />
+        <CartIcon cartCount={cartCount} />
 
         <SearchBar />
 
@@ -304,33 +313,47 @@ const Items = (props) => {
 };
 
 const Item = ({ item }) => {
+  const renderPrice = () => {
+    if (item) {
+      if (item.offer) {
+        return (
+          <>
+            <strike>Rs {item.cost}</strike>
+            <br></br>Rs {item.cost_after_discount}
+          </>
+        );
+      } else {
+        return <>Rs {item.cost}</>;
+      }
+    }
+  };
   return (
     <div className="menu-item-card">
-      <div className="menu-img-container">
-        <Link
-          to={`/menu/items/${item.id}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
+      <Link
+        to={`/menu/items/${item.id}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <div className="menu-img-container">
           <img src={item.image} alt={item.name} className="menu-item-img" />
-        </Link>
-      </div>
+        </div>
 
-      <div className="menu-card-content">
-        <div className="menu-item-name">{item.name}</div>
-        <div className="menu-item-cost">Rs. {item.cost}</div>
-        <button className="menu-add-to-cart-btn">Add to Cart</button>
-      </div>
+        <div className="menu-card-content">
+          <div className="menu-item-name">{item.name}</div>
+          <div className="menu-item-cost">{renderPrice()}</div>
+          <button className="menu-add-to-cart-btn">Add to Cart</button>
+        </div>
+      </Link>
     </div>
   );
 };
 
-const CartIcon = () => {
+export const CartIcon = ({ cartCount }) => {
   return (
     <>
       <Link to="/cart">
         <button className="cart-icon-link">
           <FaCartPlus style={{ fontSize: "1.4rem" }} />
-          <span className="cart-items-no">5</span>
+          <span className="cart-items-no">{cartCount}</span>
         </button>
       </Link>
     </>

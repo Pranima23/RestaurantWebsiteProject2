@@ -10,9 +10,11 @@ function Register() {
   const [repassword, setRepassword]=useState("");
   const history=useHistory("");
 
-  async function SignUp(){
-    let item =(name,email,password,repassword)
-
+  async function SignUp(e){
+    e.preventDefault();
+    console.log('sign up form submitted')
+    let item =({email: email, password: password, phone_no: "9865656565"})
+    console.log(item)
     let result = await fetch("/api/users/",{
     method:"POST",
     body:JSON.stringify(item),
@@ -23,7 +25,7 @@ function Register() {
   })
     result=await result.json()
     localStorage.setItem("user.info", JSON.stringify(result))
-    history.pushState('/');
+    // history.pushState('/');
   }
   
 
@@ -33,16 +35,17 @@ function Register() {
       <p className='footer-subscription-heading'>
         Register to our site to get the exclusive membership and recieve many offers and discount
       </p>
+      <br/>
       <p className='footer-subscription-text'>
         You can Logout at any time.
       </p>
       <div className='input-areas'>
-        <form>
+        <form onSubmit={SignUp}>
         <input
             className='footer-input'
             name='name'
             value ={name}
-            onchange={(e)=>setName(e.target.value)}
+            onChange={(e)=>setName(e.target.value)}
             type='text'
             placeholder='Your Name'
           />
@@ -50,7 +53,7 @@ function Register() {
             className='footer-input'
             name='email'
             value ={email}
-            onchange={(e)=>setEmail(e.target.value)}
+            onChange={(e)=>setEmail(e.target.value)}
             type='email'
             placeholder='Your Email'
           />
@@ -58,7 +61,7 @@ function Register() {
             className='footer-input'
             name='password'
             value ={password}
-            onchange={(e)=>setPassword(e.target.value)}
+            onChange={(e)=>setPassword(e.target.value)}
             type='password'
             placeholder='Your password'
           />
@@ -66,12 +69,17 @@ function Register() {
             className='footer-input'
             name='Confirm Password'
             value ={repassword}
-            onchange={(e)=>setRepassword(e.target.value)}
+            onChange={(e)=>setRepassword(e.target.value)}
             type='password'
             placeholder='Confirm Password'
           />
-          <Button onclick={SignUp} buttonStyle='btn--outline'>SignUp</Button>
+          <Button buttonStyle='btn--outline'>SignUp</Button>
+          <br/>
         </form>
+        <br/>
+        <p className='footer-subscription-text'>
+            Thank you for Signing Up.
+        </p>
       </div>
     </section>
        <br>

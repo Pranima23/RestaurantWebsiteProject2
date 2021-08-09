@@ -64,6 +64,8 @@ function Footer() {
             </Link>
           </div>
           <small className='website-rights'>ReserveNDine © 2021</small>
+          <br/>
+          <small className='website-rights'>opening hours 9 AM to 5 PM</small>
           <div className='social-icons'>
             <Link
               className='social-icon-link'

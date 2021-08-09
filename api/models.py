@@ -98,11 +98,12 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-
+    
     def categories(self):
         if self.category:
             return ', '.join([c.name for c in self.category.all()])
 
+    @property
     def ingredients(self):
         if self.ingredient:
             return ', '.join([i.name for i in self.ingredient.all()])
@@ -197,11 +198,14 @@ class OrderDetail(models.Model):
 
     @property
     def order_item_cost(self):
+        if self.item is None:
+            return "None"
         return self.quantity * self.item.cost
 
     @property
     def order_item_cost_after_discount(self):
-        return self.quantity * self.item.cost_after_discount
+        if self.item is not None:
+             return self.quantity * self.item.cost_after_discount
 
 #Invoice models
 class Invoice(models.Model):
