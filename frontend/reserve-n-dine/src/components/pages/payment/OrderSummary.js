@@ -139,30 +139,112 @@ const Checkout = (props) => {
       reservation_detail: 1,
     };
     console.log("handling post");
-    //let orderid
     axios
       .post("api/orders/", order)
-      .then((res) => {
-        console.log(res.data);
-        orderItems.forEach((item) => {
-          console.log(res.data.id);
-          const orderdetails = {
-            order: res.data.id,
-            item: item.id,
-            quantity: item.quantity,
-          };
-          axios
-            .post("api/orderdetails/", orderdetails)
-            .then((res) => {
-              console.log(res.data);
-              // const orderid = res.data.id;
-            })
-            .catch((err) => console.log(err));
-        });
-        //setresponseData(res.data)
-        // const orderid = res.data.id;
+      .then((resOrders) => {
+        console.log("response from order post", resOrders);
+        axios
+          .post("api/invoices/", {
+            order: resOrders.data.id,
+          })
+          .then((resInvoices) => {
+            console.log("response from invoices post", resInvoices, resOrders);
+            orderItems.forEach((item) => {
+              axios
+                .post("api/orderdetails/", {
+                  order: resOrders.data.id,
+                  item: item.id,
+                  quantity: item.quantity,
+                })
+                .then((resOrderDetails) => {
+                  console.log(
+                    "response from orderdetails post",
+                    resOrderDetails,
+                    resInvoices,
+                    resOrders
+                  );
+                  console.log('invoice no', resInvoices.data.invoice_no)
+                  console.log('order detail id', resOrderDetails.data.id)
+                  axios
+                    .post("api/invoicelineitems/", {
+                      "invoice": resInvoices.data.invoice_no,
+                      "order_detail": resOrderDetails.data.id,
+                    })
+                    .then((resInvoiceLineItems) => {
+                      console.log(
+                        "response from invoice line items post",
+                        resInvoiceLineItems,
+                        resOrderDetails,
+                        resInvoices,
+                        resOrders
+                      );
+                    })
+                    .catch((errInvoiceLineItems) => {
+                      console.log(
+                        "error from invoice line items",
+                        errInvoiceLineItems
+                      );
+                    });
+                })
+                .catch((errOrderDetails) => {
+                  console.log("error from order details", errOrderDetails);
+                });
+            });
+          })
+          .catch((errInvoices) => {
+            console.log("error from invoices post", errInvoices);
+          });
       })
-      .catch((err) => console.log(err));
+      .catch((errOrders) => {
+        console.log("error from orders post", errOrders);
+      });
+    //let orderid
+    // axios
+    //   .post("api/orders/", order)
+    //   .then((resOrders) => {
+    //     console.log(resOrders.data);
+    //     const invoice = {
+    //       order: resOrders.data.id,
+    //     };
+    //     axios.post("api/invoices/", invoice).then((resInvoices) => {
+    //       console.log(resInvoices.data);
+    //       orderItems
+    //         .forEach((item) => {
+    //           console.log(resOrders.data.id);
+    //           const orderdetails = {
+    //             order: resOrders.data.id,
+    //             item: item.id,
+    //             quantity: item.quantity,
+    //           };
+    //           axios
+    //             .post("api/orderdetails/", orderdetails)
+    //             .then((resOrderDetails) => {
+    //               console.log(resOrderDetails.data);
+    //               const invoicelineitems = {
+    //                 invoice: resInvoices.data.id,
+    //                 order_detail: resOrderDetails.data.id,
+    //               };
+    //               axios
+    //                 .post("api/invoicelineitems/", invoicelineitems)
+    //                 .then((resInvoiceLineItems) => {
+    //                   console.log(resInvoiceLineItems.data);
+
+    //                   // const orderid = res.data.id;
+    //                 })
+    //                 .catch((errInvoiceLineItems) =>
+    //                   console.log(errInvoiceLineItems)
+    //                 );
+    //               // const orderid = res.data.id;
+    //             })
+    //             .catch((errOrderDetails) => console.log(errOrderDetails));
+    //           // const orderid = res.data.id;
+    //         })
+    //         .catch((errInvoices) => console.log(errInvoices));
+    //     });
+    //     //setresponseData(res.data)
+    //     // const orderid = res.data.id;
+    //   })
+    //   .catch((errOrders) => console.log(errOrders));
   };
   return (
     <div className="checkout-container1">

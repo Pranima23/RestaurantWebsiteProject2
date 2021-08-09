@@ -65,7 +65,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderDetail
-        fields = ['order', 'url', 'item', 'quantity', 'special_instruction', 'order_item_cost', 'order_item_cost_after_discount']
+        fields = ['id', 'order', 'url', 'item', 'quantity', 'special_instruction', 'order_item_cost', 'order_item_cost_after_discount']
 
 #Invoice Serializers
 class InvoiceSerializer(serializers.ModelSerializer):
