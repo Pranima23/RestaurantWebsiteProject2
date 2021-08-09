@@ -245,7 +245,18 @@ const Checkout = (props) => {
     //     // const orderid = res.data.id;
     //   })
     //   .catch((errOrders) => console.log(errOrders));
-  };
+ };
+// payment methods post
+//  const handlePaymentMethod = ()=> {
+//    const payment ={
+//     payment_method_name: "eSewa",
+//    } ;
+//   axios 
+//   .post("api/paymentmethods/",payment)
+//   .then((res) =>{console.log(res)})
+//   .catch((err) => console.log(err))
+//   console.log(payment);
+// };
   return (
     <div className="checkout-container1">
       <section className="checkout-subscription">
@@ -299,10 +310,10 @@ const Checkout = (props) => {
                     </div>
                     <div className="payment-option">
                       <Link to="/esewa">
-                        <button className="pay-with-esewa">eSewa</button>
+                        <button className="pay-with-esewa" >eSewa</button>
                       </Link>
                       <Link to="/payment">
-                        <button className="pay-with-cash">Cash</button>
+                        <button className="pay-with-cash" >Cash</button>
                       </Link>
                     </div>
                   </>
