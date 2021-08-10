@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./booking.css";
 import { Button } from "../../Button";
+import { AiFillPropertySafety } from "react-icons/ai";
 
 //Service time
 const serviceTimeInHour = 1;
@@ -192,7 +193,7 @@ const ReservationForm = () => {
     approxCheckOut
   ) => {
     e.preventDefault();
-    const availableSeatPlans = findAvailableSeatPlans(
+    const availableSeats = findAvailableSeatPlans(
       seatPlans,
       reservations,
       partySize,
@@ -202,8 +203,36 @@ const ReservationForm = () => {
     );
     setReservationDetails({
       ...reservationDetails,
-      availableSeatPlans: availableSeatPlans,
+      availableSeatPlans: availableSeats,
     });
+  
+      window.alert(`If no available tables are shown, select other date and time`)
+    
+  };
+
+  const handleSelectSeatPlan = (seatPlan) => {
+    console.log(seatPlan.id);
+    alert(
+      `Your booking has been confirmed for ${partySize} people at ${new Date(
+        checkIn
+      ).toLocaleDateString()}. You will be placed at table(s) ${
+        seatPlan.table[0]
+      }${seatPlan.table[1] && ` and ${seatPlan.table[1]} combined`}`
+    );
+    axios
+      .post("api/reservations/", {
+        check_in_date: checkIn,
+        party_size: partySize,
+        seat_plan: seatPlan.id,
+        customer: 1,
+      }, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
+      .then((res) => localStorage.setItem('reservationId', res.data.id))
+      .catch((err) => console.log(err));
+
   };
 
   //api calls
@@ -254,62 +283,124 @@ const ReservationForm = () => {
     fontFamily: "Arial",
   };
   return (
-    <form
-      onSubmit={(e) =>
-        handleReservationFormSubmit(
-          e,
-          seatPlans,
-          reservations,
-          partySize,
-          checkIn,
-          tables,
-          approxCheckOut
-        )
-      }
-    >
-      <label className="checkin">
-        Check-in
-        <br></br>
-        Enter Valid date and time
-      </label>
-      <DatePicker
-        required
-        selected={checkIn}
-        minDate={new Date()}
-        onChange={handleChangeCheckIn}
-        placeholderText=" Enter Valid date and time "
-        showTimeSelect
-        showYearDropdown
-        dateFormat="Pp"
-        filterTime={filterPassedTime}
-      />
-      {/* <p>{checkOut}</p> */}
+    <div className="reservation-form-container">
+      <h2>Make a Reservation</h2>
+      <p>
+        For parties of six or more, we recommend making reservations at least
+        two weeks in advance. For walk-ins, we only seat parties on a first
+        come, first served basis.
+      </p>
+      <form
+        className="reservation-form"
+        onSubmit={(e) =>
+          handleReservationFormSubmit(
+            e,
+            seatPlans,
+            reservations,
+            partySize,
+            checkIn,
+            tables,
+            approxCheckOut
+          )
+        }
+      >
+        <div className="reservation-form-inputs">
+          <div className="check-in">
+            <label>Check-in</label>
+            <DatePicker
+              required
+              selected={checkIn}
+              minDate={new Date()}
+              onChange={handleChangeCheckIn}
+              placeholderText=" Enter Valid date and time "
+              showTimeSelect
+              showYearDropdown
+              dateFormat="Pp"
+              filterTime={filterPassedTime}
+            />
+          </div>
+          {/* <p>{checkOut}</p> */}
+          <div className="party-size">
+            <label>Party Size</label>
+            <select value={partySize} onChange={handleChangePartySize} required>
+              <option value="" selected hidden>
+                Select no. of people
+              </option>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="6">6</option>
+              <option value="8">8</option>
+              <option value="10">10</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+        </div>
+        <button className="find-table-btn">Find a Table</button>
 
-      <label className="partysize">Party Size</label>
-      <select value={partySize} onChange={handleChangePartySize} required>
-        <option value="" selected hidden>
-          Select no. of people
-        </option>
-        <option value="2">2</option>
-        <option value="4">4</option>
-        <option value="6">6</option>
-        <option value="8">8</option>
-        <option value="10">10</option>
-        <option value="12">12</option>
-      </select>
-      <Button>
-        <b style={myStyle}> Find a table! </b>
-      </Button>
-      <p className="tablemessagedisplay">
+        {/* {checkIn && new Date(checkIn).getTime()} */}
+        {/* {availableSeatPlansList && availableSeatPlansList[0].id} */}
+      </form>
+      {/* <p className="tablemessagedisplay">
         {" "}
         Here, you need to pass the value for showing the table availability!
-      </p>
-      {/* {checkIn && new Date(checkIn).getTime()} */}
-      {/* {availableSeatPlansList && availableSeatPlansList[0].id} */}
-    </form>
+      </p> */}
+      <div className="available-seat-plans">
+      {(availableSeatPlans.length !== 0) && (<div>Please select from the following available tables:</div>)}
+        {availableSeatPlans && 
+          availableSeatPlans.map((seatPlan, index) => (
+            // console.log(seatPlan.id)
+            <button
+              onClick={() => handleSelectSeatPlan(seatPlan)}
+              key={index}
+              className="seat-btn"
+            >
+              {/* {console.log(seatPlan.table)} */}
+              {"Table(s) "}
+              {seatPlan.table[0]}
+              {seatPlan.table[1] && ` and ${seatPlan.table[1]} combined`}
+            </button>
+          ))}
+      </div>
+    </div>
   );
 };
 
-export default ReservationForm;
+// const SeatPlan = (key) => {
+//   return <button>hi {seatPlan.table.map((t, tindex) => (
+//     <p key={tindex}>{t.table_no}</p>
+//   ))} and </button>;
+// };
+
+const OpeningHourInfo = () => {
+  return (
+    <div className="opening-hour-info-container">
+      <div className="opening-hour-info-content">
+        <div className="dashed-border-container">
+          <h3>Open Timing</h3>
+          <hr />
+          <h5>Sunday - Friday</h5>
+          <p>7 am - 10 pm</p>
+          <h5>Saturday</h5>
+          <p>8 am - 11 pm</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ReservationContent = (props) => {
+  return <div className="reservation-content">{props.children}</div>;
+};
+
+const Reservation = () => {
+  return (
+    <ReservationContent>
+      <OpeningHourInfo />
+      <ReservationForm />
+    </ReservationContent>
+  );
+};
+
+export default Reservation;
 
 //# sourceMappingURL=/path/to/Booking.js.map

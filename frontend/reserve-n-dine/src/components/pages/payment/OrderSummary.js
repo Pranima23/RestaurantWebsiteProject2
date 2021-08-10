@@ -136,7 +136,7 @@ const Checkout = (props) => {
   const handlePlaceOrder = () => {
     togglePopup();
     const order = {
-      reservation_detail: 1,
+      reservation_detail: localStorage.getItem("reservationId"),
     };
     console.log("handling post");
     axios

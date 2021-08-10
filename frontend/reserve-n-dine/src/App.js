@@ -5,7 +5,7 @@ import Home from "./components/pages/HomePage/Home";
 import Services from "./components/pages/Services/Services";
 import Products from "./components/pages/Products/Products";
 import book from "./components/pages/Reservations/book";
-import ReservationForm from "./components/pages/Reservation/Booking";
+import Reservation from "./components/pages/Reservation/Booking";
 import Menu from "./components/pages/Menu/Menu";
 import SignUp from "./components/pages/SignUp/SignUp";
 import Register from "./components/pages/SignUp/SignUp";
@@ -264,7 +264,7 @@ function App() {
             !localStorage.getItem("userInfo") ? (
               <Redirect to="/log-in" />
             ) : (
-              <ReservationForm {...props} />
+              <Reservation {...props} />
             )
           }
         />
