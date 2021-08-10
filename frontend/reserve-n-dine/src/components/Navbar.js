@@ -12,7 +12,7 @@ import {
 import { IconContext } from "react-icons/lib";
 // import Chatbot from './Chatbot';
 
-function Navbar({ cartCount, isLoggedIn, handleLoginState }) {
+function Navbar({ cartCount, handleLoginState }) {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const handleClick = () => {
@@ -20,10 +20,13 @@ function Navbar({ cartCount, isLoggedIn, handleLoginState }) {
   };
 
   const closeMobileMenu = () => setClick(false);
+  const history = useHistory("");
+
   const handleLogout = () => {
-      handleLoginState(false);
-      localStorage.clear();
-  }
+    // handleLoginState(false);
+    localStorage.clear();
+    history.push('/log-in/')
+  };
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -38,14 +41,13 @@ function Navbar({ cartCount, isLoggedIn, handleLoginState }) {
   }, []);
 
   window.addEventListener("resize", showButton);
-  const history = useHistory();
 
   let user = JSON.parse(localStorage.getItem("user-info"));
 
-  function logout() {
-    localStorage.clear();
-    history.pushState("/register");
-  }
+  // function logout() {
+  //   localStorage.clear();
+  //   history.pushState("/register");
+  // }
   return (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
@@ -94,7 +96,7 @@ function Navbar({ cartCount, isLoggedIn, handleLoginState }) {
               <li className="nav-btn">
                 {button ? (
                   <Link to="/register" className="btn-link">
-                    <Button onclick={logout} buttonStyle="btn--outline">
+                    <Button  buttonStyle="btn--outline">
                       {" "}
                       SIGN UP{" "}
                     </Button>
@@ -102,7 +104,7 @@ function Navbar({ cartCount, isLoggedIn, handleLoginState }) {
                 ) : (
                   <Link to="/register" className="btn-link">
                     <Button
-                      onclick={logout}
+                      
                       buttonStyle="btn--outline"
                       buttonSize="btn--mobile"
                     >
@@ -112,7 +114,33 @@ function Navbar({ cartCount, isLoggedIn, handleLoginState }) {
                   </Link>
                 )}
               </li>
-              {!isLoggedIn /* For the logout and the username option on the navbar */ ? (
+              {localStorage.getItem(
+                "userInfo"
+              ) /* For the logout and the username option on the navbar */ ? (
+                <li className="nav-btn">
+                  {button ? (
+                    <Link to="/" className="btn-link">
+                      <Button onClick={handleLogout} buttonStyle="btn--outline">
+                        {" "}
+                        LOG OUT{" "}
+                      </Button>
+                      <li className="nav-item" title={"user && user.name"}></li>
+                    </Link>
+                  ) : (
+                    <Link to="/" className="btn-link">
+                      <Button
+                        onClick={handleLogout}
+                        buttonStyle="btn--outline"
+                        buttonSize="btn--mobile"
+                      >
+                        {" "}
+                        LOG OUT{" "}
+                      </Button>
+                      <li className="nav-item" title={"user && user.name"}></li>
+                    </Link>
+                  )}
+                </li>
+              ) : (
                 <li className="nav-btn">
                   {button ? (
                     <Link to="/log-in" className="btn-link">
@@ -127,33 +155,6 @@ function Navbar({ cartCount, isLoggedIn, handleLoginState }) {
                         {" "}
                         LOG IN{" "}
                       </Button>
-                    </Link>
-                  )}
-                </li>
-              ) : (
-                <li className="nav-btn">
-                  {button ? (
-                    <Link to="/" className="btn-link">
-                      <Button
-                        onClick={handleLogout}
-                        buttonStyle="btn--outline"
-                      >
-                        {" "}
-                        LOG OUT{" "}
-                      </Button>
-                      <li className="nav-item" title={"user && user.name"}></li>
-                    </Link>
-                  ) : (
-                    <Link to="/" className="btn-link">
-                      <Button
-                        onClick={handleLogout}
-                        buttonStyle="btn--outline"
-                        buttonSize="btn--mobile"
-                      >
-                        {" "}
-                        LOG OUT{" "}
-                      </Button>
-                      <li className="nav-item" title={"user && user.name"}></li>
                     </Link>
                   )}
                 </li>

@@ -35,11 +35,11 @@ const cartFromLocalStorage = JSON.parse(
 function App() {
   const [cartItems, setCartItems] = useState(cartFromLocalStorage);
   const [cartCount, setCartCount] = useState();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLoginState = (bool) => {
-    setIsLoggedIn(bool);
-  };
+  // const handleLoginState = (bool) => {
+  //   setIsLoggedIn(bool);
+  // };
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -162,18 +162,20 @@ function App() {
     <Router>
       <Navbar
         cartCount={cartCount}
-        isLoggedIn={isLoggedIn}
-        handleLoginState={handleLoginState}
+        // isLoggedIn={isLoggedIn}
+        // handleLoginState={handleLoginState}
       />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Home} exact/>
         <Route path="/services" component={Services} />
         <Route path="/products" component={Products} />
         <Route
           path="/menu"
           exact
           render={(props) => (
-            <Menu {...props} cartCount={cartCount} isLoggedIn={isLoggedIn} />
+            <Menu {...props} cartCount={cartCount} 
+            // isLoggedIn={isLoggedIn} 
+            />
           )}
         />
         {/* <Route path="/menu/items/:itemId" exact>
@@ -187,7 +189,7 @@ function App() {
           path="/menu/items/:itemId"
           exact
           render={(props) =>
-            !isLoggedIn ? (
+            !localStorage.getItem("userInfo") ? (
               <Redirect to="/log-in" />
             ) : (
               <ItemDetail
@@ -244,10 +246,12 @@ function App() {
           path="/log-in"
           exact
           render={(props) =>
-            isLoggedIn ? (
+            localStorage.getItem("userInfo") ? (
               <Redirect to="/" />
             ) : (
-              <Login handleLoginState={handleLoginState} />
+              <Login 
+              // handleLoginState={handleLoginState} 
+              />
             )
           }
         />
@@ -257,7 +261,7 @@ function App() {
           path="/reservation"
           exact
           render={(props) =>
-            !isLoggedIn ? (
+            !localStorage.getItem("userInfo") ? (
               <Redirect to="/log-in" />
             ) : (
               <ReservationForm {...props} />

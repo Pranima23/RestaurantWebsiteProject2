@@ -5,7 +5,8 @@ import "./Login.css";
 import axios from "axios";
 
 function Login(props) {
-  const {handleLoginState} = props
+  // const {handleLoginState} = props
+  const history = useHistory("");
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -25,7 +26,9 @@ function Login(props) {
         console.log(res);
         localStorage.setItem("access_token", res.data.access);
         localStorage.setItem("refresh_token", res.data.refresh);
-        handleLoginState(true);
+        // handleLoginState(true);
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        history.push('/')
         // axios
         //   .post("api/token/refresh/", { refresh: localStorage.getItem('refresh_token') })
         //   .then((response) => {
@@ -47,14 +50,14 @@ function Login(props) {
 
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
-  const history = useHistory();
+  // const history = useHistory();
   // console.log("email", email);
   // console.log("password", password);
-  useEffect(() => {
-    if (localStorage.getItem("user-info")) {
-      history.push("/menu");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("user-info")) {
+  //     history.push("/menu");
+  //   }
+  // }, []);
   // async function login() {
   //   console.log("Trying to log in....");
   //   let item = { email: email, password: password };
