@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rest_framework import viewsets 
+from rest_framework import viewsets, permissions
 from .serializers import *
 from .models import *
+
 
 # Create your views here.
 # def api(request):
@@ -12,6 +13,7 @@ from .models import *
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.AllowAny, )
 
 #Offer view
 class OfferView(viewsets.ModelViewSet):
@@ -22,6 +24,8 @@ class OfferView(viewsets.ModelViewSet):
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
 
 #Ingredient view
 class IngredientView(viewsets.ModelViewSet):
@@ -32,6 +36,7 @@ class IngredientView(viewsets.ModelViewSet):
 class ItemView(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 #Ingredients in Item view
 class IngredientsInItemView(viewsets.ModelViewSet):

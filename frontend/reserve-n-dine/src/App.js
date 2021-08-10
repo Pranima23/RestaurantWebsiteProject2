@@ -4,20 +4,25 @@ import "./App.css";
 import Home from "./components/pages/HomePage/Home";
 import Services from "./components/pages/Services/Services";
 import Products from "./components/pages/Products/Products";
-import book from "./components/pages/Reservation/Booking";
-//import ReservationForm from "./components/pages/Reservation/Booking";
+import book from "./components/pages/Reservations/book";
+import Reservation from "./components/pages/Reservation/Booking";
 import Menu from "./components/pages/Menu/Menu";
 import SignUp from "./components/pages/SignUp/SignUp";
 import Register from "./components/pages/SignUp/SignUp";
 import Login from "./components/pages/Login/Login";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
-// import "bootstrap/dist/css/bootstrap.min.css";
-import Payment from "./components/pages/payment/Payment";
-import ReservationForm from "./components/pages/Reservation/Booking";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Payment from "./components/pages/payment/payment";
+import Popup from "./components/pages/payment/Popup";
 import Esewa from "./components/pages/payment/Esewa";
 import esewaverify from "./components/pages/payment/esewaverify";
 import OrderSummary from "./components/pages/payment/OrderSummary";
@@ -30,6 +35,11 @@ const cartFromLocalStorage = JSON.parse(
 function App() {
   const [cartItems, setCartItems] = useState(cartFromLocalStorage);
   const [cartCount, setCartCount] = useState();
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // const handleLoginState = (bool) => {
+  //   setIsLoggedIn(bool);
+  // };
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -117,14 +127,14 @@ function App() {
 
   //const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
 
-
- // useEffect(() =>{
+  // useEffect(() =>{
   //  localStorage.getItem("cartItems", JSON.stringify(orderItems))
-    
- //    }, [orderItems]);
+
+  //    }, [orderItems]);
   //   console.log(orderItems)
 
- {/*  useEffect(() => {
+  {
+    /*  useEffect(() => {
      orderItems.forEach(item => {
       axios
    .post("api/orderdetails/", {
@@ -135,10 +145,6 @@ function App() {
   .then((res) => console.log(res));
 })
 },[]); 
-*/}
- 
- {/*function proceed (){
-=======
 
   const LocalStoragetoOrder = JSON.parse(
     localStorage.getItem("cartItems") || "[]"
@@ -153,53 +159,63 @@ function App() {
 
   
     /*function proceed (){
->>>>>>> origin/Siza
+=======
+*/
+  }
+
+  {
+    /*function proceed (){
+>>>>>>> origin/pranima
     console.log("proceeding to next page");
     const orderItems = localStorage.getItem("cartItems");
     console.log(orderItems)
     return orderItems;
-
-
-  }*/}
-
-
- 
-  // const calculateorderItemTotal = (orderItem) => {
-  //   console.log(orderItem);
-  //   const quantity = orderItem.quantity;
-  //   const rate = parseFloat(orderItem.cost);
-  //   return quantity * rate;
-  // };
-
-  // const calculateOrderTotal = () => {
-  //   let priceTotal = 0;
-  //   orderItems.forEach((orderItem) => {
-  //     priceTotal += calculateorderItemTotal(orderItem);
-  //   });
-  //   return priceTotal;
-  // };
-
-
+  }*/
+  }
 
   return (
     <Router>
-      <Navbar cartCount={cartCount} />
+      <Navbar
+        cartCount={cartCount}
+        // isLoggedIn={isLoggedIn}
+        // handleLoginState={handleLoginState}
+      />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Home} exact/>
         <Route path="/services" component={Services} />
         <Route path="/products" component={Products} />
         <Route
           path="/menu"
           exact
-          render={(props) => <Menu {...props} cartCount={cartCount} />}
+          render={(props) => (
+            <Menu {...props} cartCount={cartCount} 
+            // isLoggedIn={isLoggedIn} 
+            />
+          )}
         />
-        <Route path="/menu/items/:itemId" exact>
+        {/* <Route path="/menu/items/:itemId" exact>
           <ItemDetail
             cartItems={cartItems}
             cartCount={cartCount}
             handleAddToCart={handleAddToCart}
           />
-        </Route>
+        </Route> */}
+        <Route
+          path="/menu/items/:itemId"
+          exact
+          render={(props) =>
+            !localStorage.getItem("userInfo") ? (
+              <Redirect to="/log-in" />
+            ) : (
+              <ItemDetail
+                {...props}
+                cartItems={cartItems}
+                cartCount={cartCount}
+                handleAddToCart={handleAddToCart}
+              />
+            )
+          }
+        />
         <Route
           path="/cart"
           render={(props) => (
@@ -220,34 +236,52 @@ function App() {
           render={(props) => (
             <OrderSummary
               {...props}
-
-             
               orderItems={cartItems}
               calculateorderItemTotal={calculateItemTotal}
               calculateOrderTotal={calculateCartTotal}
-             // handleproceed={proceed}
-
+              // handleproceed={proceed}
             />
           )}
         />
-         <Route path="/esewa" 
-        render={(props) => (
-          <Esewa 
-          {...props}
-          orderItems={cartItems}
-          calculateOrderTotal={calculateCartTotal}
-          />
-        )}
-      />
-      <Route path="/esewaverify" component={esewaverify} />
+        <Route path="/popup" component={Popup} />
+        <Route
+          path="/esewa"
+          render={(props) => (
+            <Esewa
+              {...props}
+              orderItems={cartItems}
+              calculateOrderTotal={calculateCartTotal}
+            />
+          )}
+        />
+        <Route path="/esewaverify" component={esewaverify} />
         <Route path="/sign-up" component={SignUp} />
-        <Route path="/log-in" component={Login} />
+        {/* <Route path="/log-in" component={Login} /> */}
+        <Route
+          path="/log-in"
+          exact
+          render={(props) =>
+            localStorage.getItem("userInfo") ? (
+              <Redirect to="/" />
+            ) : (
+              <Login 
+              // handleLoginState={handleLoginState} 
+              />
+            )
+          }
+        />
         <Route path="/payment" component={Payment} />
         <Route path="/register" component={Register} />
         <Route
           path="/reservation"
           exact
-          render={(props) => <ReservationForm {...props} />}
+          render={(props) =>
+            !localStorage.getItem("userInfo") ? (
+              <Redirect to="/log-in" />
+            ) : (
+              <Reservation {...props} />
+            )
+          }
         />
         <Route path="/reservation" component={book} />
         {/* <Route path='/Chatbot' component={Chatbot} /> */}
