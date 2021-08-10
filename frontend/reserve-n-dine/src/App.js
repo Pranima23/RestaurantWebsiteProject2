@@ -21,7 +21,7 @@ import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Payment from "./components/pages/payment/payment";
+import Payment from "./components/pages/payment/Payment";
 import Popup from "./components/pages/payment/Popup";
 import Esewa from "./components/pages/payment/Esewa";
 import esewaverify from "./components/pages/payment/esewaverify";
