@@ -39,7 +39,7 @@ const Esewa = (props) => {
           name="su"
         />
         <input value="http://merchant.com.np/page/esewa_payment_failed?q=fu" type="hidden" name="fu"></input>
-        <div className="submit-alignment"><input value="Click here " type="submit" class="submit"></input></div>
+        <input value="Click here " type="submit" class="submit"></input>
      
       </form>
     </>
