@@ -19,6 +19,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
 from api import views
+from rest_framework_simplejwt import views as jwt_views
+
 
 router = routers.DefaultRouter()
 router.register(r'items', views.ItemView, 'item')

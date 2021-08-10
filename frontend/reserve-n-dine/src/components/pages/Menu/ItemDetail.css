@@ -6,7 +6,6 @@ Global Styles
   padding: 0;
   box-sizing: border-box;
   font-size: 16px;
-  font-family: "Roboto", sans-serif;
 }
 
 /*=============
@@ -20,7 +19,10 @@ Global Styles
   --pink: #f00946;
   --lightblue: #276afb;
 }
+
 .details {
+  font-family: "Roboto", sans-serif;
+
   display: flex;
   justify-content: space-between;
   align-items: flex-start;

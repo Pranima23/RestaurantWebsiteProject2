@@ -10,9 +10,10 @@ import { homeObjOne, homeObjTwo, homeObjThree, homeObjFour } from "./Data";
 import Pricing from "../../Pricing";
 import { ItemsContext } from "../../context/ItemsContext";
 import { CartItemsContext } from "../../context/CartItemsContext";
+import axiosInstance from "../../axios";
 
 const Menu = (props) => {
-  const { cartCount } = props;
+  const { cartCount, isLoggedIn } = props;
 
   /*===========
   States
@@ -63,7 +64,7 @@ const Menu = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
   useEffect(() => {
     axios
-      .get("api/items/")
+      .get("api/items/",)
       .then((res) => {
         setItems(res.data);
         setSelectedItems(res.data);
@@ -76,7 +77,6 @@ const Menu = (props) => {
       .catch((err) => console.log(err));
   }, []);
 
-  
   console.log(items);
 
   /*===========
