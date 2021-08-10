@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import './Esewa.css';
 const Payment = () => {
     const handlePaymentCash = (e) => {
         e.preventDefault();
@@ -19,7 +19,8 @@ const Payment = () => {
     return (
         <div>
             <h3>Your bill has been saved </h3> 
-             <button classname="buttoncash" onClick={handlePaymentCash}><Link to ="/">Exit</Link></button> 
+             <button class="cash" onClick={handlePaymentCash}>
+                 <Link to ="/"  style={{ textDecoration: "none", color:"inherit"}} class="exit">Exit</Link></button> 
         </div>
     )
 }

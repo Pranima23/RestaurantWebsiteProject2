@@ -166,6 +166,7 @@ const Checkout = (props) => {
                     resOrders
                   );
                   console.log('invoice no', resInvoices.data.invoice_no);
+                  localStorage.setItem('currentinvoice', JSON.stringify(resInvoices.data.invoice_no));
                   console.log('order detail id', resOrderDetails.data.id);
                   axios
                     .post('api/invoicelineitems/', {
