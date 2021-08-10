@@ -82,12 +82,7 @@
     vertical-align: middle;
     display: inline-block;
   }
-  .esewa_text{
-    text-align: left;
-    page-break-after: always;
-    padding: 5px;
-    font-size: 20px;
-  }
+  
   
   @media screen and (max-width: 991px) {
     .container {

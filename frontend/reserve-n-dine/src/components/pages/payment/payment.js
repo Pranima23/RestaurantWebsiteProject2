@@ -17,10 +17,10 @@ const Payment = () => {
 
    
     return (
-        <div>
+        <div className="checkout"> 
             <h3>Your bill has been saved </h3> 
              <button class="cash" onClick={handlePaymentCash}>
-                 <Link to ="/"  style={{ textDecoration: "none", color:"inherit"}} class="exit">Exit</Link></button> 
+                 <Link to ="/"  style={{ textDecoration: "none", color:"inherit"}} className="exit">Checkout</Link></button> 
         </div>
     )
 }
