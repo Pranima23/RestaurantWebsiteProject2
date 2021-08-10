@@ -246,6 +246,5 @@ class Payment(models.Model):
 
     @property
     def payment_amount(self):
-        if self.invoice is None:
-               return "None"
-        return self.invoice.invoice_amount_after_discount
+        if self.invoice is not None:
+            return self.invoice.invoice_amount_after_discount

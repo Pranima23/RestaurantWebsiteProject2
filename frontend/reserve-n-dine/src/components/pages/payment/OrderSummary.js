@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import Cart from '../Cart/Cart';
 import Popup from './Popup';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Button } from '../../Button';
 import './OrderSummary.css';
 import axios from 'axios';
@@ -135,6 +135,7 @@ const Checkout = (props) => {
 
   const handlePlaceOrder = () => {
     togglePopup();
+
     const order = {
       reservation_detail: 1,
     };
@@ -251,24 +252,15 @@ const Checkout = (props) => {
   const handlePayment = (e) => {
     e.preventDefault();
     axios
-      .post("api/paymentmethods/", {
-        payment_method_name: "eSewa",
+      .post('api/paymentmethods/', {
+        payment_method_name: 'eSewa',
       })
       .then((response) => {
         console.log(response);
       })
       .catch((error) => console.log(error));
   };
-  const handlePaymentCash = () => {
-   
-    axios
-      .post('api/paymentmethods/', {
-        payment_method_name: 'Cash on arrival',
-      })
-      .then(function (response) {
-        console.log(response);
-      });
-  };
+
   return (
     <div className="checkout-container1">
       <section className="checkout-subscription">
@@ -322,14 +314,13 @@ const Checkout = (props) => {
                     </div>
                     <div className="payment-option">
                       <Link to="/esewa">
-                        <button
-                          className="pay-with-esewa"
-                          onclick={handlePayment}>
-                          eSewa
-                        </button>
+                        
+                        <button className="pay-with-esewa"> eSewa</button>
+                    
                       </Link>
-                      <Link to="/payment" onclick={handlePaymentCash}>
-                        <button className="pay-with-cash" > Cash</button>
+
+                      <Link to="/payment">
+                        <button className="pay-with-cash"> Cash</button>
                       </Link>
                     </div>
                   </>
