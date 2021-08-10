@@ -14,61 +14,47 @@ const OrderSummary = (props) => {
         calculateOrderTotal,
     } = props;
 
-    return ( <
-        >
-        <
-        OrderContent >
-        <
-        OrderHeader / >
-        <
-        Update / >
-        <
-        OrderTable > {
+    return ( <>
+        <OrderContent>
+        <OrderHeader/>
+        <Update/>
+        <OrderTable > {
             orderItems.map((orderItem, index) => ( <
                 OrderItem key = { index }
                 //handleproceed= {handleproceed}
                 orderItem = { orderItem }
-                calculateorderItemTotal = { calculateorderItemTotal }
-                />
+                calculateorderItemTotal = { calculateorderItemTotal }/>
             ))
-        } <
-        /OrderTable> <
-        OrderTotal orderTotal = { calculateOrderTotal }
-        /> <
-        Checkout orderItems = { orderItems }
-        /> < /
-        OrderContent > <
-        />
+        } 
+        </OrderTable> 
+        <OrderTotal orderTotal = { calculateOrderTotal }/> 
+        <Checkout orderItems = { orderItems }/> 
+        </OrderContent > </>
     );
 };
 
 export default OrderSummary;
 
 const OrderContent = (props) => {
-    return <div className = "cart-content" > { props.children } < /div>;
+    return <div className = "cart-content" > { props.children } </div>;
 };
 
 const OrderHeader = () => {
-    return <div className = "cart-header" > Order Details < /div>;
+    return <div className = "cart-header" > Order Details </div>;
 };
 
 const Update = () => {
-    return ( <
-        Link to = "/cart"
-        className = "btn-link1" >
-        <
-        Button onclick = { Cart }
+    return ( 
+        <Link to = "/cart" className = "btn-link1">
+        <Button onclick = { Cart }
         buttonStyle = "btn--outline1"
         buttonSize = "btn--mobile1" >
-        Update your Cart <
-        /Button> < /
-        Link >
+        Update your Cart </Button> </Link>
     );
 };
 
 const OrderTable = (props) => {
-    return ( <
-        >
+    return ( <>
         <
         div className = "cart-items-table" >
         <
@@ -78,16 +64,14 @@ const OrderTable = (props) => {
         <
         th className = "div-head-col div-col"
         colSpan = "2" >
-        ITEM <
-        /th> <
-        th className = "div-head-col div-col" > PRICE < /th> <
-        th className = "div-head-col div-col" > QTY < /th> <
-        th className = "div-head-col div-col" > TOTAL < /th> <
-        th className = "div-head-col div-col" > < /th> < /
-        thead > { props.children } <
-        /table> < /
-        div > <
-        />
+        ITEM 
+        </th> 
+        <th className = "div-head-col div-col" > PRICE </th> 
+        <th className = "div-head-col div-col" > QTY </th> 
+        <th className = "div-head-col div-col" > TOTAL </th> 
+        <th className = "div-head-col div-col" > </th> 
+        </thead > { props.children } </table>
+        </div > </>
     );
 };
 
@@ -97,43 +81,32 @@ const OrderItem = (props) => {
     const renderPrice = () => {
         if (orderItem) {
             if (orderItem.offer) {
-                return ( <
-                    >
-                    <
-                    strike > Rs. { orderItem.cost } < /strike> <
-                    br > < /br>Rs. {orderItem.cost_after_discount} < / >
+                return ( <>
+                    <strike > Rs. { orderItem.cost } </strike> <
+                    br > </br>Rs. {orderItem.cost_after_discount} </>
                 );
             } else {
-                return < > Rs. { orderItem.cost } < />;
+                return < > Rs. { orderItem.cost } </>;
             }
         }
     };
-    return ( <
-        tr className = "div-row" >
-        <
-        td className = "div-col cart-item-img-container" >
-        <
-        img className = "cart-item-img"
+    return ( <tr className = "div-row" >
+        <td className = "div-col cart-item-img-container" >
+        <img className = "cart-item-img"
         src = { image }
-        alt = { name }
-        /> < /
-        td > <
-        td className = "div-col cart-item-name" > { name } < /td> <
-        td className = "div-col cart-item-price" > Rs. { renderPrice() } < /td> <
-        td className = "div-col cart-item-qty" > { quantity } < /td> <
+        alt = { name }/> </td> <
+        td className = "div-col cart-item-name" > { name } </td> <
+        td className = "div-col cart-item-price" > Rs. { renderPrice() } </td> <
+        td className = "div-col cart-item-qty" > { quantity } </td> <
         td className = "div-col cart-item-total" >
-        Rs. { calculateorderItemTotal(orderItem) } <
-        /td> < /
-        tr >
+        Rs. { calculateorderItemTotal(orderItem) } </td> </tr>
     );
 };
 
 const OrderTotal = ({ orderTotal }) => {
-    return ( <
-        div className = "cart-total" >
-        <
-        div className = "cart-total-header" > Total < /div> <
-        div className = "cart-total-amount" > Rs. { orderTotal() } < /div> < /
+    return ( <div className = "cart-total" >
+        <div className = "cart-total-header" > Total </div> <
+        div className = "cart-total-amount" > Rs. { orderTotal() } </div> </
         div >
     );
 };
@@ -159,6 +132,7 @@ const Checkout = (props) => {
             .post("api/orders/", order)
             .then((resOrders) => {
                 console.log("response from order post", resOrders);
+                 localStorage.setItem('currentorder', JSON.stringify(resOrders.data.id));
                 axios
                     .post("api/invoices/", {
                         order: resOrders.data.id,
@@ -263,98 +237,38 @@ const Checkout = (props) => {
         //   .catch((errOrders) => console.log(errOrders));
     };
 
-    const handlePayment = () => {
-        const axios = require('axios');
-        axios
-            .post('api/paymentmethods/', {
-                payment_method_name: 'eSewa',
-            })
-            .then(function(response) {
-                console.log(response);
-            });
-    };
+    
 
-    return ( <
-        div className = "checkout-container1" >
-        <
-        section className = "checkout-subscription" >
-        <
-        p className = "checkout-subscription-heading" >
+    return ( <div className = "checkout-container1" >
+        <section className = "checkout-subscription" >
+        <p className = "checkout-subscription-heading" >
         Are you sure of your items in the checklist ? Do you want to Checkout ?
-        <
-        /p> <
-        br / >
-        <
-        div className = "input-areas" >
-        <
-        form action = ""
-        method = "POST" >
-        <
-        input className = "footer-input"
-        name = "Ordered By"
-        type = "name"
-        placeholder = "Your Name" /
-        >
-        <
-        input className = "footer-input"
-        name = "email"
-        type = "email"
-        placeholder = "Your Email" /
-        >
-        <
-        input className = "footer-input"
-        name = "Mobile number"
-        type = "password"
-        placeholder = "Your number" /
-        >
-        <
-        input className = "footer-input"
-        name = "adresss"
-        type = "text"
-        placeholder = "Your address" /
-        >
-
-        <
-        div className = "btn-link1" >
-        <
-        input type = "button"
-        value = " Place order"
-        buttonStyle = "btn--outline1"
-        buttonSize = "btn--mobile1"
-        onClick = { handlePlaceOrder } >
-        <
-        /input> < /
-        div >
+        </p> <br/>
+        <div className = "input-areas" >
+        <form action = "" method = "POST" >
+        <input className = "footer-input" name = "Ordered By" type = "name" placeholder = "Your Name" />
+        <input className = "footer-input" name = "email" type = "email" placeholder = "Your Email" />
+        <input className = "footer-input" name = "Mobile number" type = "password" placeholder = "Your number" />
+        <input className = "footer-input" name = "adresss" type = "text" placeholder = "Your address"/>
+        <div className = "btn-link1" >
+        <input type = "button" value = " Place order" buttonStyle = "btn--outline1" buttonSize = "btn--mobile1" onClick = { handlePlaceOrder } >
+        </input> 
+        </div >
 
         {
             isOpen && ( <
-                Popup content = { <
-                    >
-                    <
-                    div className = "title" >
-                    <
-                    b > Payment Options < /b> < /
-                    div > <
-                    div className = "payment-option" >
-                    <
-                    Link to = "/esewa" >
-                    <
-                    button className = "pay-with-esewa"
-                    onclick = { handelp } > eSewa < /button> < /
-                    Link > <
-                    Link to = "/payment" >
-                    <
-                    button className = "pay-with-cash" > Cash < /button> < /
-                    Link > <
-                    /div> < / >
+                Popup content = { <>
+                    <div className = "title" >
+                    <b > Payment Options </b> </div > 
+                    <div className = "payment-option" >
+                    <Link to = "/esewa" >
+                    <button className = "pay-with-esewa"> eSewa </button> </Link > 
+                    <Link to = "/payment" >
+                    <button className = "pay-with-cash" > Cash </button> </Link > </div> </>
                 }
                 handleClose = { togglePopup }
                 />
             )
-        } <
-        /form> < /
-        div > <
-        /section> < /
-        div >
+        } </form> </div > </section> </div >
     );
 };

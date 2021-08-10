@@ -11,7 +11,7 @@
 #     path('itemingredient/', IngredientsInItemView.as_view()),
 #     path('table/', TableView.as_view()),
 #     path('seatplan/', SeatPlanView.as_view()),
-#     path('reservation/', ReservationView.as_view()),
+#     path('reservations/', ReservationView.as_view()),
 #     path('order/', OrderView.as_view()),
 #     path('orderdetail/', OrderDetailView.as_view()),
 #     path('invoice/', InvoiceView.as_view()),

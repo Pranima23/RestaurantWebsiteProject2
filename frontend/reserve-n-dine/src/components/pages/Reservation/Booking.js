@@ -13,6 +13,11 @@ const calculateCheckOut = (checkIn) => {
   return new Date(checkIn.getTime() + serviceTimeInHour * 60 * 60 * 1000);
 };
 
+function isHidden(el) {
+    var style = window.getComputedStyle(el);
+    return (style.display === 'none')
+}
+
 function findAvailableSeatPlans(
   seatPlans,
   reservations,
