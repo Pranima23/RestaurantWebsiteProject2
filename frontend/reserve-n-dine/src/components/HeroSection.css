@@ -83,6 +83,7 @@
     display: inline-block;
   }
   
+  
   @media screen and (max-width: 991px) {
     .container {
       padding-right: 30px;

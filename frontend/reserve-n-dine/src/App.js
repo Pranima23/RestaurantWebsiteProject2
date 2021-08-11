@@ -21,7 +21,7 @@ import Cart from "./components/pages/Cart/Cart";
 import Footer from "./components/pages/Footer/Footer";
 import ItemDetail from "./components/pages/Menu/ItemDetail";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Payment from "./components/pages/payment/payment";
+import Payment from "./components/pages/payment/Payment";
 import Popup from "./components/pages/payment/Popup";
 import Esewa from "./components/pages/payment/Esewa";
 import esewaverify from "./components/pages/payment/esewaverify";
@@ -123,7 +123,6 @@ function App() {
     });
     return priceTotal;
   };
-
   //const LocalStoragetoOrder = JSON.parse(localStorage.getItem("cartItems") || "{");
 
   //const [orderItems, setorderItems] = useState(LocalStoragetoOrder);
@@ -146,11 +145,13 @@ function App() {
   .then((res) => console.log(res));
 })
 },[]); 
+
 */
   }
 
   {
     /*function proceed (){
+
     console.log("proceeding to next page");
     const orderItems = localStorage.getItem("cartItems");
     console.log(orderItems)
@@ -221,25 +222,35 @@ function App() {
           render={(props) => (
             <OrderSummary
               {...props}
+
+             
               orderItems={cartItems}
               calculateorderItemTotal={calculateItemTotal}
               calculateOrderTotal={calculateCartTotal}
-              // handleproceed={proceed}
+             // handleproceed={proceed}
+
             />
           )}
         />
-        <Route path="/popup" component={Popup} />
-        <Route
-          path="/esewa"
-          render={(props) => (
-            <Esewa
-              {...props}
-              orderItems={cartItems}
-              calculateOrderTotal={calculateCartTotal}
-            />
-          )}
+         <Route path="/popup" component={Popup} />
+        <Route path="/esewa" 
+        render={(props) => (
+          <Esewa 
+          {...props}
+          orderItems={cartItems}
+          calculateOrderTotal={calculateCartTotal}
+          />
+        )}
+      />
+      <Route path="/esewaverify"
+       render={(props) => (
+        <Esewa 
+        {...props}
+        orderItems={cartItems}
+        calculateOrderTotal={calculateCartTotal}
         />
-        <Route path="/esewaverify" component={esewaverify} />
+        )} 
+        />
         <Route path="/sign-up" component={SignUp} />
         {/* <Route path="/log-in" component={Login} /> */}
         <Route

@@ -1,10 +1,10 @@
-import React, { Component, useState } from "react";
-import Cart from "../Cart/Cart";
-import Popup from "./Popup";
-import { Link } from "react-router-dom";
-import { Button } from "../../Button";
-import "./OrderSummary.css";
-import axios from "axios";
+import React, { Component, useState } from 'react';
+import Cart from '../Cart/Cart';
+import Popup from './Popup';
+import { Link, Redirect } from 'react-router-dom';
+import { Button } from '../../Button';
+import './OrderSummary.css';
+import axios from 'axios';
 
 const OrderSummary = (props) => {
   const {
@@ -129,16 +129,17 @@ const Checkout = (props) => {
     setisOpen(!isOpen);
   };
 
-  const [responseData, setresponseData] = useState();
-
   const { orderItems } = props;
+
+  // payment methods post
 
   const handlePlaceOrder = () => {
     togglePopup();
+
     const order = {
       reservation_detail: localStorage.getItem("reservationId"),
     };
-    console.log("handling post");
+    console.log('handling post');
     axios
       .post("api/orders/", order, {
         headers: {
@@ -146,7 +147,8 @@ const Checkout = (props) => {
         },
       })
       .then((resOrders) => {
-        console.log("response from order post", resOrders);
+        console.log('response from order post', resOrders);
+        localStorage.setItem('currentorder', JSON.stringify(resOrders.data.id));
         axios
           .post(
             "api/invoices/",
@@ -160,7 +162,7 @@ const Checkout = (props) => {
             }
           )
           .then((resInvoices) => {
-            console.log("response from invoices post", resInvoices, resOrders);
+            console.log('response from invoices post', resInvoices, resOrders);
             orderItems.forEach((item) => {
               axios
                 .post(
@@ -179,7 +181,7 @@ const Checkout = (props) => {
                 )
                 .then((resOrderDetails) => {
                   console.log(
-                    "response from orderdetails post",
+                    'response from orderdetails post',
                     resOrderDetails,
                     resInvoices,
                     resOrders
@@ -202,7 +204,7 @@ const Checkout = (props) => {
                     )
                     .then((resInvoiceLineItems) => {
                       console.log(
-                        "response from invoice line items post",
+                        'response from invoice line items post',
                         resInvoiceLineItems,
                         resOrderDetails,
                         resInvoices,
@@ -211,22 +213,22 @@ const Checkout = (props) => {
                     })
                     .catch((errInvoiceLineItems) => {
                       console.log(
-                        "error from invoice line items",
+                        'error from invoice line items',
                         errInvoiceLineItems
                       );
                     });
                 })
                 .catch((errOrderDetails) => {
-                  console.log("error from order details", errOrderDetails);
+                  console.log('error from order details', errOrderDetails);
                 });
             });
           })
           .catch((errInvoices) => {
-            console.log("error from invoices post", errInvoices);
+            console.log('error from invoices post', errInvoices);
           });
       })
       .catch((errOrders) => {
-        console.log("error from orders post", errOrders);
+        console.log('error from orders post', errOrders);
       });
     //let orderid
     // axios
@@ -276,6 +278,19 @@ const Checkout = (props) => {
     //   })
     //   .catch((errOrders) => console.log(errOrders));
   };
+
+  const handlePayment = (e) => {
+    e.preventDefault();
+    axios
+      .post('api/paymentmethods/', {
+        payment_method_name: 'eSewa',
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="checkout-container1">
       <section className="checkout-subscription">
@@ -329,10 +344,13 @@ const Checkout = (props) => {
                     </div>
                     <div className="payment-option">
                       <Link to="/esewa">
-                        <button className="pay-with-esewa">eSewa</button>
+                        
+                        <button className="pay-with-esewa"> eSewa</button>
+                    
                       </Link>
+
                       <Link to="/payment">
-                        <button className="pay-with-cash">Cash</button>
+                        <button className="pay-with-cash"> Cash</button>
                       </Link>
                     </div>
                   </>
