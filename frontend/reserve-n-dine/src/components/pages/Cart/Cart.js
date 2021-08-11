@@ -191,8 +191,8 @@ const CartButtons = () => {
 
       <div>
       <Link to="/OrderSummary">
-        <button className="proceed-btn"  >
-         <FaChevronRight style={{ marginLeft: "1em", fontSize: "0.8em" }} />Proceed
+        <button className="proceed-btn"  >Proceed
+         <FaChevronRight style={{ marginLeft: "1em", fontSize: "0.8em" }} />
         </button>
       </Link>
        {/*} {isOpen && (

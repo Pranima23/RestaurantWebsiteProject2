@@ -205,34 +205,55 @@ const ReservationForm = () => {
       ...reservationDetails,
       availableSeatPlans: availableSeats,
     });
-  
-      window.alert(`If no available tables are shown, select other date and time`)
-    
+
+    // window.alert(
+    //   `If no available tables are shown, select other date and time`
+    // );
   };
 
   const handleSelectSeatPlan = (seatPlan) => {
     console.log(seatPlan.id);
-    alert(
-      `Your booking has been confirmed for ${partySize} people at ${new Date(
-        checkIn
-      ).toLocaleDateString()}. You will be placed at table(s) ${
-        seatPlan.table[0]
-      }${seatPlan.table[1] && ` and ${seatPlan.table[1]} combined`}`
-    );
+    
+    if (seatPlan.table[1]) {
+      alert(
+        `Your booking has been confirmed for ${partySize} people at ${new Date(
+          checkIn
+        ).toLocaleDateString()}. You will be placed at table(s) ${
+          seatPlan.table[0]
+        }${seatPlan.table[1] && ` and ${seatPlan.table[1]} combined`}`
+      );
+    } else {
+      alert(
+        `Your booking has been confirmed for ${partySize} people at ${new Date(
+          checkIn
+        ).toLocaleDateString()}. You will be placed at table(s) ${
+          seatPlan.table[0]
+        }`
+      );
+    }
     axios
-      .post("api/reservations/", {
-        check_in_date: checkIn,
-        party_size: partySize,
-        seat_plan: seatPlan.id,
-        customer: 1,
-      }, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
+      .post(
+        "api/reservations/",
+        {
+          check_in_date: checkIn,
+          party_size: partySize,
+          seat_plan: seatPlan.id,
+          customer: 1,
         },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      )
+      .then((res) => {
+        localStorage.setItem("reservationId", res.data.id);
+        setReservationDetails({
+          ...reservationDetails,
+          availableSeatPlans: [],
+        });
       })
-      .then((res) => localStorage.setItem('reservationId', res.data.id))
       .catch((err) => console.log(err));
-
   };
 
   //api calls
@@ -285,6 +306,7 @@ const ReservationForm = () => {
   return (
     <div className="reservation-form-container">
       <h2>Make a Reservation</h2>
+      <hr />
       <p>
         For parties of six or more, we recommend making reservations at least
         two weeks in advance. For walk-ins, we only seat parties on a first
@@ -344,22 +366,35 @@ const ReservationForm = () => {
         {" "}
         Here, you need to pass the value for showing the table availability!
       </p> */}
-      <div className="available-seat-plans">
-      {(availableSeatPlans.length !== 0) && (<div>Please select from the following available tables:</div>)}
-        {availableSeatPlans && 
-          availableSeatPlans.map((seatPlan, index) => (
-            // console.log(seatPlan.id)
-            <button
-              onClick={() => handleSelectSeatPlan(seatPlan)}
-              key={index}
-              className="seat-btn"
-            >
-              {/* {console.log(seatPlan.table)} */}
-              {"Table(s) "}
-              {seatPlan.table[0]}
-              {seatPlan.table[1] && ` and ${seatPlan.table[1]} combined`}
-            </button>
-          ))}
+      <div className="available-seat-plans-container">
+        {availableSeatPlans.length !== 0 && (
+          <div>Please select from the following available tables:</div>
+        )}
+        {availableSeatPlans.length === 0 && (
+          <div>
+            Please submit date, time and party size to view available tables. If
+            no tables are shown, please alter the date and time.
+          </div>
+        )}
+        {/* {availableSeatPlans.length === 0 && partySize && checkIn && (
+          <div>No tables available</div>
+        )} */}
+        <div className="available-seat-plans">
+          {availableSeatPlans &&
+            availableSeatPlans.map((seatPlan, index) => (
+              // console.log(seatPlan.id)
+              <button
+                onClick={() => handleSelectSeatPlan(seatPlan)}
+                key={index}
+                className="seat-btn"
+              >
+                {/* {console.log(seatPlan.table)} */}
+                {"Table(s) "}
+                {seatPlan.table[0]}
+                {seatPlan.table[1] && ` and ${seatPlan.table[1]} combined`}
+              </button>
+            ))}
+        </div>
       </div>
     </div>
   );

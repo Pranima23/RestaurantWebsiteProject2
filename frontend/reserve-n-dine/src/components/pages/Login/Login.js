@@ -45,7 +45,8 @@ function Login(props) {
           "Bearer  " + localStorage.getItem("access_token");
         
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {console.log(err);
+      alert("Invalid email or password.")});
   }
 
   // const [email, setEmail] = useState("");
