@@ -163,6 +163,7 @@ const Checkout = (props) => {
           )
           .then((resInvoices) => {
             console.log('response from invoices post', resInvoices, resOrders);
+            localStorage.setItem('currentinvoice', JSON.stringify(resInvoices.data.invoice_no));
             orderItems.forEach((item) => {
               axios
                 .post(
@@ -300,7 +301,7 @@ const Checkout = (props) => {
         <br />
         <div className="input-areas">
           <form action="" method="POST">
-            <input
+            {/* <input
               className="footer-input"
               name="Ordered By"
               type="name"
@@ -323,7 +324,7 @@ const Checkout = (props) => {
               name="adresss"
               type="text"
               placeholder="Your address"
-            />
+            /> */}
 
             <div className="btn-link1">
               <input

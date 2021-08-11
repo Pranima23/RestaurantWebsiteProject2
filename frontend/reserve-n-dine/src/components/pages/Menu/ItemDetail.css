@@ -26,7 +26,7 @@ Global Styles
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .details-image {
@@ -174,10 +174,12 @@ li {
 }
 
 /* Responsive */
-@media (max-width: 940px) {
+@media (max-width: 960px) {
   .details {
+    display: flex;
     flex-direction: column;
     margin-top: 60px;
+    margin-left: 13px;
   }
 
   .details-image,
@@ -192,6 +194,7 @@ li {
     right: 0;
     top: -65px;
     left: initial;
+
   }
 }
 

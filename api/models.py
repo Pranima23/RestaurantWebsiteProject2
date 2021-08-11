@@ -160,17 +160,23 @@ class Order(models.Model):
         if self.ordered_items:
             orderdetails = OrderDetail.objects.filter(order=self.id)
             return ', '.join([str(o) for o in orderdetails])
+        else:
+            return 1
 
     @property
     def order_total_cost(self):
         if self.ordered_items:
             orderdetails = OrderDetail.objects.filter(order=self.id)
-            return sum([item.order_item_cost for item in orderdetails])        
+            return sum([item.order_item_cost for item in orderdetails])     
+        else:
+            return 0   
     @property
     def order_total_cost_after_discount(self):
         if self.ordered_items:
             orderdetails = OrderDetail.objects.filter(order=self.id)
-            return sum([item.order_item_cost_after_discount for item in orderdetails])        
+            return sum([item.order_item_cost_after_discount for item in orderdetails]) 
+        else:
+            return 0       
 
     @property
     def discount(self):
@@ -198,14 +204,16 @@ class OrderDetail(models.Model):
 
     @property
     def order_item_cost(self):
-        if self.item is None:
-            return "None"
-        return self.quantity * self.item.cost
+        if self.item:
+            return self.quantity * self.item.cost
+        else:
+            return 0
 
     @property
     def order_item_cost_after_discount(self):
         if self.item is not None:
              return self.quantity * self.item.cost_after_discount
+        
 
 #Invoice models
 class Invoice(models.Model):
@@ -215,11 +223,17 @@ class Invoice(models.Model):
 
     @property
     def invoice_amount(self):
-        return self.order.order_total_cost
+        if self.order:
+            return self.order.order_total_cost
+        else:
+            return 0
 
     @property
     def invoice_amount_after_discount(self):
-        return self.order.total_cost_after_discount
+        if self.order:
+            return self.order.total_cost_after_discount
+        else:
+            return 0
 
     @property
     def invoice_line_items(self):

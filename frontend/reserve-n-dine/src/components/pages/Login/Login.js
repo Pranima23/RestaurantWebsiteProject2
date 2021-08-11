@@ -11,6 +11,26 @@ function Login(props) {
     email: "",
     password: "",
   });
+  const [users, setUsers] = useState([]);
+  if (users) {
+    let currentUser = users.filter((user) => user.email === userInfo.email);
+
+    console.log("user", currentUser);
+    if (currentUser[0]) {
+      localStorage.setItem("currentuser", currentUser[0].id);
+      console.log("userid", currentUser[0].id);
+    }
+  }
+  console.log(users);
+  useEffect(() => {
+    axios
+      .get("api/users/")
+      .then((res) => {
+        console.log(res);
+        setUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const changeHandler = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
@@ -28,7 +48,8 @@ function Login(props) {
         localStorage.setItem("refresh_token", res.data.refresh);
         // handleLoginState(true);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        history.push('/')
+        // localStorage.setItem("currentuser", res.data.id);
+        history.push("/");
         // axios
         //   .post("api/token/refresh/", { refresh: localStorage.getItem('refresh_token') })
         //   .then((response) => {
@@ -43,10 +64,11 @@ function Login(props) {
         //   });
         axios.defaults.headers.post["Authorization"] =
           "Bearer  " + localStorage.getItem("access_token");
-        
       })
-      .catch((err) => {console.log(err);
-      alert("Invalid email or password.")});
+      .catch((err) => {
+        console.log(err);
+        alert("Invalid email or password.");
+      });
   }
 
   // const [email, setEmail] = useState("");

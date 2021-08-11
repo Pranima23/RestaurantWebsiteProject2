@@ -291,13 +291,18 @@ Small screen
     flex-direction: column;
     position: relative;
   }  
+  .menu-sidenav {
+    position: static;
+  }
 
   .categories-header {
     cursor: pointer;
+
   }  
 
   .categories-list {
-    display: none;
+    display: flex;
+    flex-direction: column;
   }
 
   .search-bar-container {

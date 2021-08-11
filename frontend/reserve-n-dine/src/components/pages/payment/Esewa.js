@@ -1,44 +1,46 @@
-import React from 'react';
-import axios from 'axios';
-import './Esewa.css';
+import React from "react";
+import axios from "axios";
+import "./Esewa.css";
 
 const Esewa = (props) => {
   const { calculateOrderTotal, orderItems } = props;
 
   const currentOrderFromLocalStorage = JSON.parse(
-    localStorage.getItem('currentorder') || '[]'
+    localStorage.getItem("currentorder") || "[]"
   );
 
   const currentinvoice = JSON.parse(
-    localStorage.getItem('currentinvoice') || '[]'
+    localStorage.getItem("currentinvoice") || "[]"
   );
   const handlePayment = (e) => {
     e.preventDefault();
     axios
-      .post('api/paymentmethods/', {
-        payment_method_name: 'eSewa',
-      })
-      .then((resPay) => {
-        console.log(resPay);
-        //   axios
-        //   .post("api/payments/", {
-        //     payment_method : resPay.data.id,
-        //     invoice: {currentinvoice},
-        //     payment_amount : {calculateOrderTotal()}
-        //   })
-        //   .then((response) => {
-        //   console.log(response)})
-        //   .catch((error)) => console.log(error));
+      .post(
+        "api/payments/",
+        {
+          invoice: localStorage.getItem("currentinvoice"),
+          payment_method: 2,
+          customer: localStorage.getItem("currentuser"),
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
       })
       .catch((error) => console.log(error));
   };
 
   return (
-    <><div className="esewacontain">
-      <h3 >You will be redirected to eSewa page</h3>
-      <button className="esewa " onClick={handlePayment} border="none">
-        Are you sure want to pay?
-      </button>
+    <>
+      <div className="esewacontain">
+        <h3>You will be redirected to eSewa page</h3>
+        <button className="esewa " onClick={handlePayment} border="none">
+          Are you sure want to pay?
+        </button>
       </div>
       <form action="https://uat.esewa.com.np/epay/main" method="POST">
         <input value={calculateOrderTotal()} name="tAmt" type="hidden" />

@@ -238,7 +238,7 @@ const ReservationForm = () => {
           check_in_date: checkIn,
           party_size: partySize,
           seat_plan: seatPlan.id,
-          customer: 1,
+          customer: localStorage.getItem("currentuser"),
         },
         {
           headers: {

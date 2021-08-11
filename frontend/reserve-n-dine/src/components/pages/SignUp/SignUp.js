@@ -41,6 +41,7 @@ function Register() {
         .then((resUsers) => console.log(resUsers))
         .catch((errUsers) => {console.log(errUsers);
         alert("User with the email or phone number already exists. Please try again.")});
+        history.push('/');
     } else {
       setPasswordError("Passwords do not match");
     }

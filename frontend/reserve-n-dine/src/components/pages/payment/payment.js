@@ -6,8 +6,15 @@ const Payment = () => {
     const handlePaymentCash = (e) => {
         e.preventDefault();
         axios
-          .post("api/paymentmethods/", {
-            payment_method_name: "Cash on arrival",
+          .post("api/payments/", {
+            invoice: localStorage.getItem("currentinvoice"),
+            payment_method: 1,
+            customer: localStorage.getItem("currentuser"),
+          }, {
+            headers: {
+              Authorization:
+                "Bearer " + localStorage.getItem("access_token"),
+            },
           })
           .then((response) => {
             console.log(response);
